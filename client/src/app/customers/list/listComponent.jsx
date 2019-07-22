@@ -6,6 +6,7 @@ import {
   FormGroup,
 } from 'reactstrap';
 
+import DefaultTableHeader from '../../layout/tableHeader/defaultTableHeader.hoc';
 import { getCustomers } from '../store/actions';
 
 type Props = {
@@ -22,7 +23,6 @@ class ListComponent extends Component<Props> {
     return (
       <div className="d-flex">
         <div className="p-2 flex-grow-1">
-          <h3>Kundenliste</h3>
           <Table responsive size="sm" hover>
             <thead>
               <tr>
@@ -97,4 +97,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ListComponent);
+export default connect(mapStateToProps, mapDispatchToProps)(DefaultTableHeader(ListComponent));

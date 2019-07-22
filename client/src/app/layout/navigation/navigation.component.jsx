@@ -2,7 +2,6 @@ import React from 'react';
 import { LinkContainer } from 'react-router-bootstrap';
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
-import Form from 'react-bootstrap/Form';
 import Dropdown from 'react-bootstrap/Dropdown';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -17,7 +16,7 @@ import Search from './search/search.component';
 // eslint-disable-next-line no-unused-vars
 function NavigationComponent(props) {
   return (
-    <Navbar bg="dark" variant="dark" expand="md" fixed="top">
+    <Navbar bg="dark" variant="dark" expand="md">
       <LinkContainer to="/">
         <Navbar.Brand>
           Infomanager
@@ -50,7 +49,7 @@ function NavigationComponent(props) {
         </Nav>
         <Nav>
           <Dropdown className="mr-2">
-            <Dropdown.Toggle>
+            <Dropdown.Toggle variant="success">
               <FontAwesomeIcon icon={faPlus} />
             </Dropdown.Toggle>
             <Dropdown.Menu>

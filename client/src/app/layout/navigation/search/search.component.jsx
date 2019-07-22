@@ -12,7 +12,7 @@ function SearchComponent(props) {
       <InputGroup>
         <Form.Control type="search" placeholder="Suchen" />
         <InputGroup.Append>
-          <Button variant="outline-success">
+          <Button variant="outline-primary">
             <FontAwesomeIcon icon={faSearch} />
           </Button>
         </InputGroup.Append>

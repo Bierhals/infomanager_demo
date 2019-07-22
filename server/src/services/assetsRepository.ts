@@ -1,4 +1,4 @@
-const dbContext = require('./dbContext');
+const dbContext = require('../db/dbContext');
 const {
   assetStatuses,
   assetTypes,
@@ -12,7 +12,7 @@ const {
 } = require('./customerHelper');
 const { addQuerySortAndLimits } = require('./repositoryHelper');
 
-async function getAssets(limit, offset, sort) {
+export async function getAssets(limit, offset, sort) {
   const query = dbContext.from('im_asset');
   const totalCount = await query.clone().count();
   addQuerySortAndLimits(query, limit, offset, sort, assetFields, [{ search: 'status', text: 'statusID' }, { search: 'type', text: 'typeID' }]);
@@ -23,7 +23,7 @@ async function getAssets(limit, offset, sort) {
   return { totalCount: totalCount[0]['count(*)'], items: data };
 }
 
-async function getAsset(id) {
+export async function getAsset(id) {
   const query = dbContext.select().from('im_asset').where('id', id);
   const data = await query;
 
@@ -34,7 +34,7 @@ async function getAsset(id) {
   return convertAsset(data[0]);
 }
 
-async function getAssetCustomers(limit, offset, sort, assetID, onlyValid) {
+export async function getAssetCustomers(limit, offset, sort, assetID, onlyValid) {
   const query = dbContext.from('im_customer_asset')
     .innerJoin('im_customer', 'im_customer_asset.customerID', 'im_customer.id')
     .where('assetID', assetID);
@@ -76,7 +76,7 @@ async function getAssetCustomers(limit, offset, sort, assetID, onlyValid) {
   return { totalCount: totalCount[0]['count(*)'], items: data };
 }
 
-async function updateAsset(id, asset) {
+export async function updateAsset(id, asset) {
   await dbContext.transaction(async (trx) => {
     const rowCount = await trx.update({
       dateChanged: new Date().toISOString(),
@@ -101,7 +101,7 @@ async function updateAsset(id, asset) {
   return updatedCustomer;
 }
 
-async function createAsset(asset) {
+export async function createAsset(asset) {
   const newAsset = asset;
   newAsset.dateCreated = new Date().toISOString();
   newAsset.userCreated = 1;
@@ -124,11 +124,3 @@ async function createAsset(asset) {
 
   return newAsset;
 }
-
-module.exports = {
-  getAssets,
-  getAsset,
-  updateAsset,
-  createAsset,
-  getAssetCustomers,
-};

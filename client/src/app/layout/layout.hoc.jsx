@@ -7,14 +7,12 @@ function LayoutHOC(ComponentBeingWrapped) {
   class Layout extends Component {
     render() {
       return (
-        <div className="app">
+        <React.Fragment>
           <header>
             <Navigation />
           </header>
-          <main role="main" className="container-fluid">
-            <ComponentBeingWrapped {...this.props} />
-          </main>
-        </div>
+          <ComponentBeingWrapped {...this.props} />
+        </React.Fragment>
       );
     }
   }

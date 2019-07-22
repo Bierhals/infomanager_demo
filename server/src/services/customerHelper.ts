@@ -1,4 +1,4 @@
-const customerFields = [
+export const customerFields = [
   { objectName: 'id', fieldName: 'id' },
   { objectName: 'dateCreated', fieldName: 'dateCreated' },
   { objectName: 'userCreated', fieldName: 'userCreated' },
@@ -13,7 +13,7 @@ const customerFields = [
   { objectName: 'address.email', fieldName: 'email' },
   { objectName: 'status', fieldName: 'statusID' }];
 
-const customerAssetFields = [
+export const customerAssetFields = [
   { objectName: 'id', fieldName: 'id' },
   { objectName: 'dateCreated', fieldName: 'dateCreated' },
   { objectName: 'userCreated', fieldName: 'userCreated' },
@@ -24,7 +24,7 @@ const customerAssetFields = [
   { objectName: 'validFrom', fieldName: 'validFrom' },
   { objectName: 'validTo', fieldName: 'validTo' }];
 
-const customerStatuses = [
+export const customerStatuses = [
   {
     id: 'A',
     name: 'Aktiv',
@@ -34,7 +34,7 @@ const customerStatuses = [
   },
 ];
 
-function convertCustomer(cust, prefix) {
+export function convertCustomer(cust, prefix: string) {
   const usedPrefix = prefix || '';
   const converted = {
     id: cust[`${usedPrefix}id`],
@@ -57,7 +57,7 @@ function convertCustomer(cust, prefix) {
   return converted;
 }
 
-function convertCustomerAsset(customerAsset, prefix) {
+export function convertCustomerAsset(customerAsset, prefix) {
   const usedPrefix = prefix || '';
   const converted = {
     id: customerAsset[`${usedPrefix}id`],
@@ -73,11 +73,3 @@ function convertCustomerAsset(customerAsset, prefix) {
 
   return converted;
 }
-
-module.exports = {
-  customerStatuses,
-  customerFields,
-  customerAssetFields,
-  convertCustomer,
-  convertCustomerAsset,
-};

@@ -1,3 +1,6 @@
+import { QueryBuilder } from 'knex';
+import { DBUnknownFieldMapping } from '../core/errors';
+
 /**
  * Diese Funktion stellt für die übergebene knex-Abfrage die Limits und Sortierung ein.
  * @param {Knex.QueryBuilder} knexQuery - knex-Abfrage
@@ -8,12 +11,12 @@
  * @param {string} fieldMappings[].objectName - Object-Feldname
  * @param {string} fieldMappings[].fieldName - SQL-Feldname
  */
-function addQuerySortAndLimits(
-  knexQuery,
-  limit,
-  offset,
-  sort,
-  fieldMappings,
+export function addQuerySortAndLimits(
+  knexQuery: QueryBuilder<any, any>,
+  limit?: number,
+  offset?: number,
+  sort?: string,
+  fieldMappings?: Array<{ objectName: string, fieldName: string }>,
 ) {
   if (limit) {
     knexQuery.limit(limit);
@@ -25,7 +28,7 @@ function addQuerySortAndLimits(
     knexQuery.orderBy(
       sort.split(',')
         .map((field) => {
-          const orderField = { column: field };
+          const orderField: { column: string; order?: "asc" | "desc" | undefined } = { column: field };
 
           switch (field.charAt(0)) {
             case '-':
@@ -39,16 +42,17 @@ function addQuerySortAndLimits(
             default:
           }
 
-          const fieldMapping = fieldMappings.find(f => f.objectName === orderField.column);
-          // Prüfen, ob der Feldname bekannt wird
+          if (fieldMappings) {
+            const fieldMapping = fieldMappings.find(f => f.objectName === orderField.column);
 
-          if (fieldMapping) {
-            // Objektnamen durch SQL-Namen ersetzen
-            orderField.column = fieldMapping.fieldName;
-          } else {
-            const error = new Error(`Der Feldname '${orderField.column}' ist nicht bekannt`);
-            error.code = 'UNKNOWN_FIELDNAME';
-            throw error;
+            // Prüfen, ob der Feldname bekannt wird
+            if (fieldMapping) {
+              // Objektnamen durch SQL-Namen ersetzen
+              orderField.column = fieldMapping.fieldName;
+            } else {
+              const error = new DBUnknownFieldMapping(`Der Feldname '${orderField.column}' ist nicht bekannt`);
+              throw error;
+            }
           }
 
           return orderField;
@@ -56,7 +60,3 @@ function addQuerySortAndLimits(
     );
   }
 }
-
-module.exports = {
-  addQuerySortAndLimits,
-};

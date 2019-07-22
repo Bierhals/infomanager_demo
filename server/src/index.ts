@@ -1,5 +1,6 @@
-const fastify = require('fastify');
-const openAPI = require('fastify-oas');
+import * as fastify from 'fastify';
+import * as openAPI from 'fastify-oas';
+import { AddressInfo } from 'net';
 const customersRouter = require('./api/customers/router');
 const assetsRouter = require('./api/assets/router');
 const customerAssetsRouter = require('./api/customerAssets/router');
@@ -49,7 +50,7 @@ customerAssetsRouter.allRoutes().forEach((route) => {
 const start = async () => {
   try {
     await api.listen(4000);
-    api.log.info(`server listening on ${api.server.address().port}`);
+    api.log.info(`server listening on ${(api.server.address() as AddressInfo).port}`);
   } catch (err) {
     api.log.error(err);
     process.exit(1);

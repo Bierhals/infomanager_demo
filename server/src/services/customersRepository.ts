@@ -1,15 +1,16 @@
-const dbContext = require('./dbContext');
-const {
+import { dbContext } from '../db/dbContext';
+import { Customer } from '../db/models/customer';
+import {
   customerStatuses,
   customerFields,
   customerAssetFields,
   convertCustomer,
   convertCustomerAsset,
-} = require('./customerHelper');
+} from './customerHelper';
 const { convertAsset, assetFields } = require('./assetHelper');
-const { addQuerySortAndLimits } = require('./repositoryHelper');
+import { addQuerySortAndLimits } from './repositoryHelper';
 
-async function getCustomerAssets(limit, offset, sort, customer, asset, onlyValid, embed) {
+export async function getCustomerAssets(limit, offset, sort, customer, asset, onlyValid, embed) {
   const query = dbContext.from('im_customer_asset');
   let selectFields = customerAssetFields.map(f => ({ objectName: `${f.objectName}`, fieldName: `ca_${f.fieldName}`, fieldWithTable: `im_customer_asset.${f.fieldName}` }));
   let embedArray = [];
@@ -78,7 +79,7 @@ async function getCustomerAssets(limit, offset, sort, customer, asset, onlyValid
   return { totalCount: totalCount[0]['count(*)'], items: data };
 }
 
-async function getCustomers(limit, offset, sort, search, embed) {
+export async function getCustomers(limit: number, offset: number, sort: string, search: string, embed: string) {
   const query = dbContext.from('im_customer');
   const selectFields = customerFields;
   let embedArray = [];
@@ -101,7 +102,7 @@ async function getCustomers(limit, offset, sort, search, embed) {
   const totalCount = await query.clone().count();
   addQuerySortAndLimits(query, limit, offset, sort, selectFields);
 
-  let data = await query.select();
+  let data = await query.select<Customer[]>();
   data = data.map(row => convertCustomer(row));
 
   if (embed) {
