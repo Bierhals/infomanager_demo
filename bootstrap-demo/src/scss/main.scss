@@ -1,0 +1,31 @@
+/*
+ * Infomanager
+ */
+
+//fontawesome
+@import "../../node_modules/@fortawesome/fontawesome-free/scss/fontawesome";
+@import "../../node_modules/@fortawesome/fontawesome-free/scss/brands";
+@import "../../node_modules/@fortawesome/fontawesome-free/scss/regular";
+@import "../../node_modules/@fortawesome/fontawesome-free/scss/solid";
+
+//bootstrap
+$spacer: 0.5rem;
+//$font-size-base:    1rem;
+$line-height-lg:              1;
+$line-height-sm:              1;
+$line-height-base:            1;
+
+$primary:#ed1b24;
+$secondary:#00305f;
+/*$success:#00C851;
+$danger:#ff4444;
+$info:#33b5e5;
+$warning:#ffbb33;
+$light:#FAFAFA;
+$dark:#4e4e4e;*/
+
+$navbar-toggler-padding-y:          .15rem;
+$navbar-toggler-padding-x:          .5rem;
+$navbar-toggler-font-size:          1rem;
+
+@import "../../node_modules/bootstrap/scss/bootstrap";

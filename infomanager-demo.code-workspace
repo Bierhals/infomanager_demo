@@ -1,15 +1,18 @@
 {
 	"folders": [
-		{
-			"path": "server"
-		},
-		{
-			"path": "client"
-		},
-		{
-			"path": "client_ts"
-		}
-	],
+    {
+      "path": "server"
+    },
+    {
+      "path": "client"
+    },
+    {
+      "path": "client_ts"
+    },
+    {
+      "path": "bootstrap-demo"
+    }
+  ],
 	"settings": {
 		"javascript.validate.enable": false
 	}
