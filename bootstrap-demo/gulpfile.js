@@ -14,7 +14,7 @@ gulp.task('sass', function () {
 
 //move js files to the src
 gulp.task('js', function () {
-  return gulp.src(['node_modules/bootstrap/dist/js/bootstrap.min*', 'node_modules/popper.js/dist/umd/popper.min*', 'node_modules/jquery/dist/jquery.min*'])
+  return gulp.src(['node_modules/bootstrap/dist/js/bootstrap.min*', 'node_modules/popper.js/dist/umd/popper.min*', 'node_modules/jquery/dist/jquery.min*', 'node_modules/@fortawesome/fontawesome-free/js/all.min.js'])
     .pipe(gulp.dest('src/js'));
     //.pipe(browserSync.stream());
 });
