@@ -2,13 +2,46 @@
  * Infomanager
  */
 
-//fontawesome
+/*
+ * fontawesome
+ */
+
 @import "../../node_modules/@fortawesome/fontawesome-free/scss/fontawesome";
 @import "../../node_modules/@fortawesome/fontawesome-free/scss/brands";
 @import "../../node_modules/@fortawesome/fontawesome-free/scss/regular";
 @import "../../node_modules/@fortawesome/fontawesome-free/scss/solid";
 
-//bootstrap
+/*
+ * bootstrap
+ */
+
+// Variables ===================================================================
 @import "variables";
+
+// Standard Bootstrap ==========================================================
 @import "../../node_modules/bootstrap/scss/bootstrap";
-@import "sidebar"
+
+// Navbar ======================================================================
+
+// Buttons =====================================================================
+
+// Typography ==================================================================
+
+// Tables ======================================================================
+
+// Forms =======================================================================
+
+// Navs ========================================================================
+
+// Indicators ==================================================================
+
+// Progress bars ===============================================================
+.progress {
+  @include box-shadow(none);
+  .progress-bar {
+    font-size: 8px;
+    line-height: 8px;
+  }
+}
+
+// Containers ==================================================================

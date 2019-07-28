@@ -1,44 +1,67 @@
+//
 // Color system
+//
 $white:    #fff !default;
 $gray-100: #f8f9fa !default;
-$gray-200: #e9ecef !default;
+$gray-200: #eee !default;
 $gray-300: #dee2e6 !default;
 $gray-400: #ced4da !default;
-$gray-500: #adb5bd !default;
-$gray-600: #6c757d !default;
+$gray-500: #999 !default;
+$gray-600: #777 !default;
 $gray-700: #495057 !default;
-$gray-800: #343a40 !default;
-$gray-900: #212529 !default;
+$gray-800: #333 !default;
+$gray-900: #2d2d2d !default;
 $black:    #000 !default;
 
-$blue:    #007bff !default;
+$blue:    #446E9B !default;
 $indigo:  #6610f2 !default;
 $purple:  #6f42c1 !default;
 $pink:    #e83e8c !default;
-$red:     #dc3545 !default;
+$red:     #ed1b24 !default;
 $orange:  #fd7e14 !default;
-$yellow:  #ffc107 !default;
-$green:   #28a745 !default;
+$yellow:  #D47500 !default;
+$green:   #3CB521 !default;
 $teal:    #20c997 !default;
-$cyan:    #17a2b8 !default;
+$cyan:    #3399F3 !default;
 
-$brand-primary:#00305f;
-$brand-secondary:#ed1b24;
-
-$primary:       $brand-primary;
-$secondary:     $brand-secondary;
-
+$primary:       $blue !default;
+$secondary:     $gray-500 !default;
+$success:       $green !default;
+$info:          $cyan !default;
+$warning:       $yellow !default;
+$danger:        $red !default;
+$light:         $gray-200 !default;
+$dark:          $gray-800 !default;
+// Options
+$enable-rounded: false !default;
+// Spacing
 $spacer: 0.5rem;
-
-$line-height-lg:              1;
-$line-height-sm:              1;
-$line-height-base:            1;
-
 // Body
-// Settings for the `<body>` element.
-$body-bg:                   $gray-400;
-$body-color:                $black;
-
-$navbar-toggler-padding-y:          .15rem;
-$navbar-toggler-padding-x:          .5rem;
-$navbar-toggler-font-size:          1rem;
+$body-color:    $gray-800 !default;
+// Components
+$line-height-lg:              1.35;
+$line-height-sm:              1.35;
+// Typography
+$font-size-base: 0.9375rem !default;
+$headings-font-weight:   300 !default;
+$line-height-base:            1.35;
+$list-inline-padding:         .3rem !default;
+// Tables
+$table-cell-padding:          .6rem !default;
+$table-cell-padding-sm:       .25rem !default;
+// Buttons + Forms
+$input-btn-padding-y:         .3rem !default;
+$input-btn-padding-x:         .6rem !default;
+$input-btn-padding-y-sm:      .2rem !default;
+$input-btn-padding-x-sm:      .3rem !default;
+$input-btn-padding-y-lg:      .3rem !default;
+$input-btn-padding-x-lg:      .8rem !default;
+// Navbar
+$navbar-dark-color:                 rgba($white,.75) !default;
+$navbar-dark-hover-color:           $white !default;
+//$navbar-dark-hover-color:           rgba($white,1) !default;
+$navbar-light-hover-color:          rgba($black,.9) !default;
+// Alerts
+$alert-border-width:                0 !default;
+// Progress bars
+$progress-height:               0.5rem !default;
