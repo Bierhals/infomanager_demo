@@ -8,6 +8,7 @@ node_modules/
 
 # production
 build/
+dist/
 
 # testing
 coverage/
@@ -21,5 +22,3 @@ infomanager.db
 .env.development.local
 .env.test.local
 .env.production.local
-bootstrap-demo/src/css/main.css
-bootstrap-demo/src/js/all.min.js

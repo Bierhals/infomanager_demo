@@ -1,43 +1,62 @@
-var gulp = require('gulp');
-var browserSync = require('browser-sync').create();
-var sass = require('gulp-sass');
-var autoprefixer = require('gulp-autoprefixer');
+const gulp = require('gulp');
+const browserSync = require('browser-sync').create();
+const sass = require('gulp-sass');
+const autoprefixer = require('gulp-autoprefixer');
+const merge = require('merge-stream');
+
+//move js files to the dist-directory
+gulp.task('js', function () {
+  const bootstrap = gulp.src('node_modules/bootstrap/dist/js/bootstrap.min*')
+    .pipe(gulp.dest('dist/js/bootstrap'));
+  const popper = gulp.src('node_modules/popper.js/dist/umd/popper.min*')
+    .pipe(gulp.dest('dist/js/popper'));
+  const jquery = gulp.src('node_modules/jquery/dist/jquery.min*')
+    .pipe(gulp.dest('dist/js/jquery'));
+  const fontawesome = gulp.src('node_modules/@fortawesome/fontawesome-free/js/all.min*')
+    .pipe(gulp.dest('dist/js/fontawesome'));
+
+  return merge(bootstrap, popper, jquery, fontawesome);
+});
+
+//move webfonts files to the dist-directory
+gulp.task('webfonts', function () {
+  return gulp.src(['node_modules/@fortawesome/fontawesome-free/webfonts/*'])
+    .pipe(gulp.dest('dist/webfonts'));
+});
 
 //convert scss files to css
 gulp.task('sass', function () {
-  return gulp.src(['src/scss/*.scss'])
+  return gulp.src('src/scss/*.scss')
     .pipe(sass())
     .pipe(autoprefixer())
-    .pipe(gulp.dest('src/css'))
+    .pipe(gulp.dest('dist/css'))
     .pipe(browserSync.stream());
 });
 
-//move js files to the src
-gulp.task('js', function () {
-  return gulp.src(['node_modules/bootstrap/dist/js/bootstrap.min*', 'node_modules/popper.js/dist/umd/popper.min*', 'node_modules/jquery/dist/jquery.min*', 'node_modules/@fortawesome/fontawesome-free/js/all.min.js'])
-    .pipe(gulp.dest('src/js'));
-    //.pipe(browserSync.stream());
+//move html files to the dist-directory
+gulp.task('html', function () {
+  return gulp.src('./src/**/*.html', { 'base': './src'})
+    .pipe(gulp.dest('dist'));
 });
 
-//move webfonts files to the src
-gulp.task('webfonts', function () {
-  return gulp.src(['node_modules/@fortawesome/fontawesome-free/webfonts/*'])
-    .pipe(gulp.dest('src/webfonts'));
-    //.pipe(browserSync.stream());
+//move images to the dist-directory
+gulp.task('img', function () {
+  return gulp.src('./src/img/**/*', { 'base': './src'})
+    .pipe(gulp.dest('dist'));
 });
 
 
 gulp.task('watch', function () {
   gulp.watch(['node_modules/bootstrap/scss/bootstrap.scss', 'src/scss/*.scss'], gulp.series('sass'));
-  gulp.watch('src/*.html').on('change', browserSync.reload);
+  gulp.watch('src/*.html', gulp.series('html')).on('change', browserSync.reload);
 });
 
 //server implementation
 gulp.task('serve', function () {
   browserSync.init({
-    server: "./src"
+    server: "./dist"
   });
 });
 
 //start server
-gulp.task('default', gulp.series('js', 'webfonts', 'sass', gulp.parallel('watch', 'serve')));
+gulp.task('default', gulp.series('js', 'webfonts', 'img', 'sass', 'html', gulp.parallel('watch', 'serve')));
