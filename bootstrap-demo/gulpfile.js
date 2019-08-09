@@ -48,7 +48,7 @@ gulp.task('img', function () {
 
 gulp.task('watch', function () {
   gulp.watch(['node_modules/bootstrap/scss/bootstrap.scss', 'src/scss/*.scss'], gulp.series('sass'));
-  gulp.watch('src/*.html', gulp.series('html')).on('change', browserSync.reload);
+  gulp.watch('src/**/*.html', gulp.series('html')).on('change', browserSync.reload);
 });
 
 //server implementation
