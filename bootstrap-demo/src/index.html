@@ -1920,7 +1920,7 @@
   <script src="js/popper/popper.min.js"></script>
   <script src="js/bootstrap/bootstrap.min.js"></script>
   <script>
-    (function () {
+    (function init() {
       $(window).scroll(function () {
         var top = $(document).scrollTop();
         if (top > 50)
@@ -1972,12 +1972,12 @@
           return line;
         });
 
-        lines = lines.join("\n");
+        lines = lines.join('\n');
 
         return lines;
       }
 
-    })();
+    }());
   </script>
 </body>
 

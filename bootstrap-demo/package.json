@@ -2,13 +2,17 @@
   "name": "infomanager_bs",
   "version": "0.0.1",
   "description": "",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Bierhals/infomanager_demo.git"
+  },
   "main": "index.js",
   "scripts": {
     "start": "gulp default",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "Sven-Uwe Bierhals",
+  "license": "MIT",
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.9.0",
     "bootstrap": "^4.3.1",
