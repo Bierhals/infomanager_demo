@@ -1,0 +1,72 @@
+/*
+ * Infomanager
+ * Bootstrap
+ */
+
+// Variables ===================================================================
+@import "variables";
+
+// Standard Bootstrap ==========================================================
+@import "~bootstrap/scss/bootstrap";
+
+// Navbar ======================================================================
+
+// Buttons =====================================================================
+
+// Typography ==================================================================
+
+// Tables ======================================================================
+
+// Forms =======================================================================
+.no-caret::after {
+  display:none;
+}
+
+// Navs ========================================================================
+
+// Indicators ==================================================================
+
+// Progress bars ===============================================================
+.progress {
+  @include box-shadow(none);
+  .progress-bar {
+    font-size: 8px;
+    line-height: 8px;
+  }
+}
+
+// Containers ==================================================================
+@include media-breakpoint-between(md, xl)
+{
+  #filter {
+    min-width: 15rem;
+    width: 15rem;
+  }
+}
+
+#content {
+  min-width: 0px;
+  padding: 1rem;
+}
+
+body {
+  padding-top: 6.4rem;
+}
+
+@include media-breakpoint-between(sm, xl)
+{
+  body {
+    padding-top: 8.4rem;
+  }
+}
+
+@media print {
+  body {
+    padding-top: 3.4rem;
+  }
+
+  #content {
+    padding-right: 0rem;
+    padding-left: 0rem;
+  }
+}

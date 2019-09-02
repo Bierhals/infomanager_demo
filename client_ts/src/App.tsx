@@ -1,25 +1,25 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import {
+  BrowserRouter,
+  Route,
+  Redirect,
+  Switch,
+} from 'react-router-dom';
+
+import CustomersList from './features/customers/list/CustomersList';
+import Home from './features/home/Home';
+import AssetList from './features/assets/AssetList';
 
 const App: React.FC = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <Switch>
+        <Route path="/customers" component={CustomersList} />
+        <Route path="/inventory" component={AssetList} />
+        <Route path="/" component={Home} />
+        <Redirect to="/" />
+      </Switch>
+    </BrowserRouter>
   );
 }
 

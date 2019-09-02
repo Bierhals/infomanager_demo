@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="utf-8">
-  <title>Infomanager: Kunden</title>
+  <title>Infomanager: Inventar</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <link rel="stylesheet" href="/css/main.css" />
@@ -66,16 +66,15 @@
             <a class="nav-link" href="/">Startseite</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link active" href="/customers">Kunden</a>
+            <a class="nav-link" href="/customers">Kunden</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#">Tickets</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/assets">Inventar</a>
+            <a class="nav-link active" href="/assets">Inventar</a>
           </li>
         </ul>
-
         <ul class="nav navbar-nav ml-auto">
           <form class="form-inline">
             <div class="input-group mr-sm-2">
@@ -92,10 +91,12 @@
       <div class="card-body px-4 py-3 d-flex flex-row">
         <div class="flex-grow-1">
           <div class="form-group form-inline mb-0">
-            <h3>Kunden</h3>
+            <h3>Inventar</h3>
             <div class="dropdown">
               <a class="btn dropdown-toggle" role="button" id="customerlist" data-toggle="dropdown" aria-haspopup="true"
-                aria-expanded="false">Aktive</a>
+                aria-expanded="false">
+                Aktive
+              </a>
               <div class="dropdown-menu" aria-labelledby="customerlist">
                 <a class="dropdown-item" href="#">Alle</a>
                 <a class="dropdown-item" href="#">Aktive</a>
@@ -105,7 +106,7 @@
           </div>
         </div>
         <div>
-          <span class="mr-3 align-middle">1 - 15 von 587</span>
+          <span class="mr-4 align-middle">1 - 15 von 587</span>
           <div class="btn-group" role="group" aria-label="pagination">
             <button class="btn btn-secondary"><i class="fas fa-caret-left"></i></button>
             <button class="btn btn-secondary"><i class="fas fa-caret-right"></i></button>
@@ -123,54 +124,34 @@
         <div class="row">
           <div class="col-sm-6 col-md-12">
             <div class="form-group">
-              <label for="filterLastname">Name</label>
-              <input type="text" class="form-control" id="filterLastname">
+              <label for="filterAssetNo">Inventar-Nr</label>
+              <input type="text" class="form-control" id="filterAssetNo">
             </div>
           </div>
           <div class="col-sm-6 col-md-12">
             <div class="form-group">
-              <label for="filterFirstname">Vorname</label>
-              <input type="text" class="form-control" id="filterFirstname">
+              <label for="filterName">Name</label>
+              <input type="text" class="form-control" id="filterName">
             </div>
           </div>
         </div>
         <div class="row">
           <div class="col-sm-4 col-md-12">
             <div class="form-group">
-              <label for="filterCompany">Firma</label>
-              <input type="text" class="form-control" id="filterCompany">
+              <label for="filterOwner">Besitzer</label>
+              <input type="text" class="form-control" id="filterOwner">
             </div>
           </div>
           <div class="col-sm-4 col-md-12">
             <div class="form-group">
-              <label for="filterDepartment">Abteilung</label>
-              <input type="text" class="form-control" id="filterDepartment">
+              <label for="filterType">Typ</label>
+              <input type="text" class="form-control" id="filterType">
             </div>
           </div>
           <div class="col-sm-4 col-md-12">
             <div class="form-group">
-              <label for="filterPhone">Telefon</label>
-              <input type="text" class="form-control" id="filterPhone">
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-sm-3 col-md-12">
-            <div class="form-group">
-              <label for="filterZIP">PLZ</label>
-              <input type="text" class="form-control" id="filterZIP">
-            </div>
-          </div>
-          <div class="col-sm-4 col-md-12">
-            <div class="form-group">
-              <label for="filterCity">Ort</label>
-              <input type="text" class="form-control" id="filterCity">
-            </div>
-          </div>
-          <div class="col-sm-5 col-md-12">
-            <div class="form-group">
-              <label for="filterStreet">Stra&szlig;e</label>
-              <input type="text" class="form-control" id="filterStreet">
+              <label for="filterVariant">Variante</label>
+              <input type="text" class="form-control" id="filterVariant">
             </div>
           </div>
         </div>
@@ -183,132 +164,132 @@
             <tr>
               <th style="cursor: pointer"># <i class="fas fa-sort-up"></i></th>
               <th style="cursor: pointer">Name <i class="fas fa-sort"></i></th>
-              <th style="cursor: pointer">Firma <i class="fas fa-sort"></i></th>
-              <th style="cursor: pointer">Abteilung <i class="fas fa-sort"></i></th>
-              <th style="cursor: pointer">Adresse <i class="fas fa-sort"></i></th>
-              <th style="cursor: pointer">Telefon <i class="fas fa-sort"></i></th>
+              <th style="cursor: pointer">Typ <i class="fas fa-sort"></i></th>
+              <th style="cursor: pointer">Variante <i class="fas fa-sort"></i></th>
+              <th style="cursor: pointer">Seriennr. <i class="fas fa-sort"></i></th>
+              <th style="cursor: pointer">Besitzer <i class="fas fa-sort"></i></th>
             </tr>
           </thead>
           <tbody class="text-nowrap">
             <tr>
-              <td><a href="showShopCustomer.html">K-5012</a></td>
-              <td>5012</td>
-              <td>Nordwind AG</td>
-              <td>Gebiet Ost</td>
-              <td>Berlin, Steinfurter Str. 111</td>
-              <td>030-76143619</td>
-            </tr>
-            <tr>
-              <td><a href="showShopCustomer.html">K-5520</a></td>
-              <td>5520</td>
-              <td>Nordwind AG</td>
-              <td>Gebiet Ost</td>
-              <td>Halle, Ringelnatzstr. 112</td>
-              <td>0345-6208918</td>
-            </tr>
-            <tr>
-              <td><a href="showShopCustomer.html">K-9001</a></td>
+              <td><a href="#">22115577</a></td>
+              <td>9001KA01</td>
+              <td>Kasse</td>
+              <td>Beetle L</td>
+              <td></td>
               <td>9001</td>
-              <td>Nordwind AG</td>
-              <td>Gebiet West</td>
-              <td>Frankfurt am Main, Nordwest Zentrum</td>
-              <td>069-43611916</td>
             </tr>
             <tr>
-              <td><a href="showShopCustomer.html">K-9524</a></td>
-              <td>9524</td>
-              <td>Nordwind AG</td>
-              <td>Gebiet West</td>
-              <td>Frankfurt am Main, Friesenring 171</td>
-              <td>069-13488290</td>
+              <td><a href="#">23115577</a></td>
+              <td>9001 Geldlade</td>
+              <td>Geldlade</td>
+              <td>KA-21</td>
+              <td></td>
+              <td>9001</td>
             </tr>
             <tr>
-              <td><a href="showEmployeeCustomer.html">K-10001</a></td>
-              <td>Haberland, Carsten</td>
-              <td>Nordwind AG</td>
-              <td>EDV</td>
-              <td>Berlin, Zentrale</td>
-              <td>030-123456-1221</td>
+              <td><a href="#">24115577</a></td>
+              <td>9001KA01</td>
+              <td>Scanner</td>
+              <td>Siemens</td>
+              <td></td>
+              <td>9001</td>
             </tr>
             <tr>
-              <td><a href="showEmployeeCustomer.html">K-10002</a></td>
-              <td>Luther, Gabriele</td>
-              <td>Nordwind AG</td>
-              <td>Personal</td>
-              <td>Berlin, Zentrale</td>
-              <td>030-123456-1311</td>
+              <td><a href="#">25115577</a></td>
+              <td>9001KA01</td>
+              <td>Drucker</td>
+              <td>ND69</td>
+              <td></td>
+              <td>9001</td>
             </tr>
             <tr>
-              <td><a href="showEmployeeCustomer.html">K-10003</a></td>
-              <td>Wilms, Cedric</td>
-              <td>Nordwind AG</td>
-              <td>EK/M</td>
-              <td>Berlin, Zentrale</td>
-              <td>030-123456-2100</td>
+              <td><a href="#">26115577</a></td>
+              <td>9001KA01</td>
+              <td>Kundendisplay</td>
+              <td>BA88</td>
+              <td></td>
+              <td>9001</td>
             </tr>
             <tr>
-              <td><a href="showEmployeeCustomer.html">K-10004</a></td>
-              <td>Wenig, Sylvia</td>
-              <td>ACME GmbH</td>
-              <td>Finanzen</td>
-              <td>Berlin, Zentrale</td>
-              <td>030-123456-1400</td>
+              <td><a href="#">27115577</a></td>
+              <td>9001KA01</td>
+              <td>Bedienderdisplay</td>
+              <td>BA77</td>
+              <td></td>
+              <td>9001</td>
             </tr>
             <tr>
-              <td><a href="showEmployeeCustomer.html">K-10005</a></td>
-              <td>Gessler, Antonio</td>
-              <td>ACME GmbH</td>
-              <td>Finanzen</td>
-              <td>Berlin, Zentrale</td>
-              <td>030-123456-1412</td>
+              <td><a href="#">28115577</a></td>
+              <td>9001KA01</td>
+              <td>Tastatur</td>
+              <td>TA74</td>
+              <td></td>
+              <td>9001</td>
             </tr>
             <tr>
-              <td><a href="showEmployeeCustomer.html">K-10101</a></td>
-              <td>Reis, Kristof</td>
-              <td>Nordwind AG</td>
-              <td>Gebiet West</td>
-              <td>Berlin, Zentrale</td>
-              <td>0175-8471830</td>
+              <td><a href="#">30547849</a></td>
+              <td>Fil9001.nordwind.test</td>
+              <td>PC</td>
+              <td>ThinkCentre M70z</td>
+              <td>MJDGZE4</td>
+              <td>9001</td>
             </tr>
             <tr>
-              <td><a href="showEmployeeCustomer.html">K-10105</a></td>
-              <td>Hillmann, Danny</td>
-              <td>Nordwind AG</td>
-              <td>Gebiet Süd-Ost</td>
-              <td>Berlin, Zentrale</td>
-              <td>0151-7475797</td>
+              <td><a href="#">31457845</a></td>
+              <td>Fil9001.nordwind.test</td>
+              <td>Monitor</td>
+              <td>L1900pa</td>
+              <td>V1GM065</td>
+              <td>9001</td>
             </tr>
             <tr>
-              <td><a href="showEmployeeCustomer.html">K-10106</a></td>
-              <td>Engelmann, Svea</td>
-              <td>Nordwind AG</td>
-              <td>Gebiet Süd-Ost</td>
-              <td>Berlin, Zentrale</td>
-              <td>0170-2475587</td>
+              <td><a href="#">28147528</a></td>
+              <td>9001 MDE</td>
+              <td>MDE</td>
+              <td>BHT5000</td>
+              <td></td>
+              <td>9001</td>
             </tr>
             <tr>
-              <td><a href="showEmployeeCustomer.html">K-10107</a></td>
+              <td><a href="#">29563578</a></td>
+              <td>9001 Drucker</td>
+              <td>Drucker</td>
+              <td>Kyocera 1300</td>
+              <td></td>
+              <td>9001</td>
+            </tr>
+            <tr>
+              <td><a href="#">EWV06241</a></td>
+              <td>9001 Kopierer</td>
+              <td>Kopierer</td>
+              <td>Canon C475 III</td>
+              <td>EWV06241</td>
+              <td>9001</td>
+            </tr>
+            <tr>
+              <td><a href="#">LDR4829GF</a></td>
+              <td>NW-NB-0078</td>
+              <td>Laptop</td>
+              <td>DELL XR593</td>
+              <td>LDR4829GF</td>
               <td>Neuhaus, Moritz</td>
-              <td>Nordwind AG</td>
-              <td>Gebiet West</td>
-              <td>Berlin, Zentrale</td>
-              <td>0170-5408286</td>
             </tr>
             <tr>
-              <td><a href="showEmployeeCustomer.html">K-10108</a></td>
-              <td>Spies, Celine</td>
-              <td>Nordwind AG</td>
-              <td>Gebiet Ost</td>
-              <td>Berlin, Zentrale</td>
-              <td>0160-4157758</td>
+              <td><a href="#">83298598234786234</a></td>
+              <td>Handy Neuhaus</td>
+              <td>Handy</td>
+              <td>IPhone 6S</td>
+              <td>83298598234786234</td>
+              <td>Neuhaus, Moritz</td>
             </tr>
             <tr>
-              <td><a href="showEmployeeCustomer.html">K-10109</a></td>
-              <td>Kruse, Erich</td>
-              <td>Nordwind AG</td>
-              <td>Gebiet West</td>
-              <td>Berlin, Zentrale</td>
-              <td>0171-1384326</td>
+              <td><a href="#">385723957328</a></td>
+              <td>Handy Neuhaus</td>
+              <td>SIM-Karte</td>
+              <td>Telekom</td>
+              <td>385723957328</td>
+              <td>Neuhaus, Moritz</td>
             </tr>
           </tbody>
         </table>

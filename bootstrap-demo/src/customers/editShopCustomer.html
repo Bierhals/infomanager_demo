@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+  <meta charset="utf-8">
+  <title>Infomanager: Kunde 9001</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <link rel="stylesheet" href="/css/main.css" />
+</head>
+
+<body>
+  <header class="fixed-top">
+    <nav class="navbar navbar-expand navbar-light bg-white">
+      <button class="navbar-toggler d-block d-sm-none mr-2" type="button" data-toggle="collapse" data-target=".navbars"
+        aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <a href="/" class="navbar-brand p-0">
+        <img src="/img/logo.png" height="30px" width="140px">
+        <span class="d-none d-sm-inline">Infomanager</span>
+      </a>
+      <ul class=" navbar-nav ml-auto">
+        <div class="form-inline">
+          <div class="dropdown">
+            <button class="btn btn-success dropdown-toggle no-caret" type="button" id="ddlNew" data-toggle="dropdown"
+              aria-haspopup="true" aria-expanded="false">
+              <i class="fas fa-plus"></i> Neu
+            </button>
+            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="ddlNew">
+              <a class="dropdown-item" href="/customers/new.html">Kunde</a>
+              <a class="dropdown-item" href="#">Ticket</a>
+              <a class="dropdown-item" href="/assets/new.html">Inventar</a>
+            </div>
+          </div>
+        </div>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle no-caret" data-toggle="dropdown" href="#" id="apps"><i
+              class="fas fa-th"></i></a>
+          <div class="dropdown-menu dropdown-menu-right" aria-labelledby="apps">
+            <a class="dropdown-item" href="#">Administration</a>
+            <div class="dropdown-divider"></div>
+            <h6 class="dropdown-header">Controlling</h6>
+            <a class="dropdown-item" href="#">Stammdaten</a>
+            <a class="dropdown-item" href="#">WiBe</a>
+            <a class="dropdown-item" href="#">PD</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="#">Intranet</a>
+          </div>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle no-caret" data-toggle="dropdown" href="#" id="user"><i
+              class="fas fa-user"></i> <span class="d-none d-md-inline">Bierhals, Sven-Uwe</span></a>
+          <div class="dropdown-menu dropdown-menu-right" aria-labelledby="user">
+            <a class="dropdown-item" href="#">Profil</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="#">Beenden</a>
+          </div>
+        </li>
+      </ul>
+    </nav>
+    <nav class="navbar navbar-expand-sm navbar-dark bg-danger">
+      <div class="collapse navbar-collapse navbars" id="collapsable_navbar_2">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link" href="/">Startseite</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" href="/customers">Kunden</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Tickets</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/assets">Inventar</a>
+          </li>
+        </ul>
+        <ul class="nav navbar-nav ml-auto">
+          <form class="form-inline">
+            <div class="input-group mr-sm-2">
+              <input class="form-control" type="text" placeholder="Suchen">
+              <div class="input-group-append">
+                <button class="btn btn-primary" type="submit"><i class="fas fa-search"></i></button>
+              </div>
+            </div>
+          </form>
+        </ul>
+      </div>
+    </nav>
+    <div id="page-Header" class="card bg-light">
+      <div class="card-body px-4 py-3 d-flex flex-row">
+        <div class="flex-grow-1">
+          <h3>
+            <ol class="breadcrumb p-0 mb-0">
+              <li class="breadcrumb-item"><a href="/customers">Kunden</a></li>
+              <li class="breadcrumb-item active">K-9001</li>
+            </ol>
+          </h3>
+        </div>
+        <div>
+          <a class="btn btn-success" href="showShopCustomer.html" role="button">Speichern</a>
+          <a class="btn btn-secondary" href="showShopCustomer.html" role="button">Zur&uuml;ck</a>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main class="bd-highlight">
+    <div id="content">
+      <div class="card">
+        <div class="card-header">
+          <div class="d-flex mb-3">
+            <h3>9001</h3>
+            <div class="ml-3">Frankfurt am Main, Nordwest Zentrum<br>069-43611916</div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-6 col-xl-4 mb-5">
+              <div class="form-group row">
+                <label for="type" class="col-sm-3 col-md-4 col-form-label">Typ</label>
+                <div class="col-sm-9 col-md-8">
+                  <select id="type" class="custom-select">
+                    <option value="1" selected>Filiale</option>
+                    <option value="2">Person</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="name" class="col-sm-3 col-md-4 col-form-label">Name</label>
+                <div class="col-sm-9 col-md-8">
+                  <input id="name" class="form-control" type="text" value="9001">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="company" class="col-sm-3 col-md-4 col-form-label">Firma</label>
+                <div class="col-sm-9 col-md-8">
+                  <input id="company" class="form-control" type="text" value="Nordwind AG">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="territory" class="col-sm-3 col-md-4 col-form-label">Gebiet</label>
+                <div class="col-sm-9 col-md-8">
+                  <input id="territory" class="form-control" type="text" value="Gebiet West">
+                </div>
+              </div>
+              <div class="form-group row mb-5">
+                <label for="salesManager" class="col-sm-3 col-md-4 col-form-label">Vertriebsleiter</label>
+                <div class="col-sm-9 col-md-8">
+                  <input id="salesManager" class="form-control" type="text" value="Neuhaus, Moritz">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="addressCO" class="col-sm-3 col-md-4 col-form-label">Adresse</label>
+                <div class="col-sm-9 col-md-8">
+                  <input id="addressCO" class="form-control" type="text" value="Nordwest Zentrum">
+                </div>
+              </div>
+              <div class="form-group row">
+                <div class="col-sm-9 offset-sm-3 col-md-8 offset-md-4">
+                  <input id="street" class="form-control" type="text" value="Bauernweg 47">
+                </div>
+              </div>
+              <div class="form-group row">
+                <div class="col-4 col-sm-3 offset-sm-3 col-md-3 offset-md-4">
+                  <input id="postcode" class="form-control" type="text" value="60444">
+                </div>
+                <div class="col-8 col-sm-6 col-md-5">
+                  <input id="city" class="form-control" type="text" value="Frankfurt am Main">
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6 col-xl-4">
+              <div class="form-group row">
+                <label for="email" class="col-sm-3 col-md-4 col-form-label">E-Mail</label>
+                <div class="col-sm-9 col-md-8">
+                  <input id="email" class="form-control" type="text" value="">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="phone" class="col-sm-3 col-md-4 col-form-label">Telefon</label>
+                <div class="col-sm-9 col-md-8">
+                  <input id="phone" class="form-control" type="text" value="069-43611916">
+                </div>
+              </div>
+              <div class="form-group row mb-5">
+                <label for="mobile" class="col-sm-3 col-md-4 col-form-label">Mobil</label>
+                <div class="col-sm-9 col-md-8">
+                  <input id="mobile" class="form-control" type="text" value="">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="status" class="col-sm-3 col-md-4 col-form-label">Status</label>
+                <div class="col-sm-9 col-md-8">
+                  <select id="status" class="custom-select">
+                    <option value="1">in Planung</option>
+                    <option value="2" selected>Eröffnet</option>
+                    <option value="3">Geschlossen</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="opening" class="col-sm-3 col-md-4 col-form-label">Er&ouml;ffnung</label>
+                <div class="col-sm-9 col-md-8">
+                  <input id="opening" class="form-control" type="text" value="27.10.2007">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="closing" class="col-sm-3 col-md-4 col-form-label">Schlie&szlig;ung</label>
+                <div class="col-sm-9 col-md-8">
+                  <input id="closing" class="form-control" type="text" value="">
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-4">
+              <div class="form-group row"><label class="col-12 col-form-label"><strong>Öffnungszeiten</strong></label>
+              </div>
+              <div class="form-group row">
+                <label for="mondayFrom" class="col-3 col-md-2 col-xl-3 col-form-label">Mo.</label>
+                <div class="col-4 col-sm-2 col-xl-4 mb-3">
+                  <input id="mondayFrom" class="form-control" type="text" value="9:30">
+                </div>
+                <div class="col-1 text-center px-4 d-sm-none d-xl-block">-</div>
+                <div class="col-4 col-sm-2 col-xl-4">
+                  <input id="mondayTo" class="form-control" type="text" value="20:00">
+                </div>
+                <div class="col-4 col-sm-2 col-xl-4 offset-3 offset-sm-1 offset-md-2 offset-xl-3">
+                  <input id="monday2From" class="form-control" type="text" value="">
+                </div>
+                <div class="col-1 text-center px-4 d-sm-none d-xl-block">-</div>
+                <div class="col-4 col-sm-2 col-xl-4">
+                  <input id="monday2To" class="form-control" type="text" value="">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="tuesdayFrom" class="col-3 col-md-2 col-xl-3 col-form-label">Di.</label>
+                <div class="col-4 col-sm-2 col-xl-4 mb-3">
+                  <input id="tuesdayFrom" class="form-control" type="text" value="9:30">
+                </div>
+                <div class="col-1 text-center px-4 d-sm-none d-xl-block">-</div>
+                <div class="col-4 col-sm-2 col-xl-4">
+                  <input id="tuesdayTo" class="form-control" type="text" value="20:00">
+                </div>
+                <div class="col-4 col-sm-2 col-xl-4 offset-3 offset-sm-1 offset-md-2 offset-xl-3">
+                  <input id="tuesday2From" class="form-control" type="text" value="">
+                </div>
+                <div class="col-1 text-center px-4 d-sm-none d-xl-block">-</div>
+                <div class="col-4 col-sm-2 col-xl-4">
+                  <input id="tuesday2To" class="form-control" type="text" value="">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="wednesdayFrom" class="col-3 col-md-2 col-xl-3 col-form-label">Mi.</label>
+                <div class="col-4 col-sm-2 col-xl-4 mb-3">
+                  <input id="wednesdayFrom" class="form-control" type="text" value="9:30">
+                </div>
+                <div class="col-1 text-center px-4 d-sm-none d-xl-block">-</div>
+                <div class="col-4 col-sm-2 col-xl-4">
+                  <input id="wednesdayTo" class="form-control" type="text" value="20:00">
+                </div>
+                <div class="col-4 col-sm-2 col-xl-4 offset-3 offset-sm-1 offset-md-2 offset-xl-3">
+                  <input id="wednesday2From" class="form-control" type="text" value="">
+                </div>
+                <div class="col-1 text-center px-4 d-sm-none d-xl-block">-</div>
+                <div class="col-4 col-sm-2 col-xl-4 mb-3">
+                  <input id="wednesday2To" class="form-control" type="text" value="">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="thursdayFrom" class="col-3 col-md-2 col-xl-3 col-form-label">Do.</label>
+                <div class="col-4 col-sm-2 col-xl-4 mb-3">
+                  <input id="thursdayFrom" class="form-control" type="text" value="9:30">
+                </div>
+                <div class="col-1 text-center px-4 d-sm-none d-xl-block">-</div>
+                <div class="col-4 col-sm-2 col-xl-4">
+                  <input id="thursdayTo" class="form-control" type="text" value="20:00">
+                </div>
+                <div class="col-4 col-sm-2 col-xl-4 offset-3 offset-sm-1 offset-md-2 offset-xl-3">
+                  <input id="thursday2From" class="form-control" type="text" value="">
+                </div>
+                <div class="col-1 text-center px-4 d-sm-none d-xl-block">-</div>
+                <div class="col-4 col-sm-2 col-xl-4">
+                  <input id="thursday2To" class="form-control" type="text" value="">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="fridayFrom" class="col-3 col-md-2 col-xl-3 col-form-label">Fr.</label>
+                <div class="col-4 col-sm-2 col-xl-4 mb-3">
+                  <input id="fridayFrom" class="form-control" type="text" value="9:30">
+                </div>
+                <div class="col-1 text-center px-4 d-sm-none d-xl-block">-</div>
+                <div class="col-4 col-sm-2 col-xl-4">
+                  <input id="fridayTo" class="form-control" type="text" value="20:00">
+                </div>
+                <div class="col-4 col-sm-2 col-xl-4 offset-3 offset-sm-1 offset-md-2 offset-xl-3">
+                  <input id="friday2From" class="form-control" type="text" value="">
+                </div>
+                <div class="col-1 text-center px-4 d-sm-none d-xl-block">-</div>
+                <div class="col-4 col-sm-2 col-xl-4 mb-3">
+                  <input id="friday2To" class="form-control" type="text" value="">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="saturdayFrom" class="col-3 col-md-2 col-xl-3 col-form-label">Sa.</label>
+                <div class="col-4 col-sm-2 col-xl-4 mb-3">
+                  <input id="saturdayFrom" class="form-control" type="text" value="9:30">
+                </div>
+                <div class="col-1 text-center px-4 d-sm-none d-xl-block">-</div>
+                <div class="col-4 col-sm-2 col-xl-4">
+                  <input id="saturdayTo" class="form-control" type="text" value="20:00">
+                </div>
+                <div class="col-4 col-sm-2 col-xl-4 offset-3 offset-sm-1 offset-md-2 offset-xl-3">
+                  <input id="saturday2From" class="form-control" type="text" value="">
+                </div>
+                <div class="col-1 text-center px-4 d-sm-none d-xl-block">-</div>
+                <div class="col-4 col-sm-2 col-xl-4">
+                  <input id="saturday2To" class="form-control" type="text" value="">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="sundayFrom" class="col-3 col-md-2 col-xl-3 col-form-label">So.</label>
+                <div class="col-4 col-sm-2 col-xl-4 mb-3">
+                  <input id="sundayFrom" class="form-control" type="text" value="">
+                </div>
+                <div class="col-1 text-center px-4 d-sm-none d-xl-block">-</div>
+                <div class="col-4 col-sm-2 col-xl-4">
+                  <input id="sundayTo" class="form-control" type="text" value="">
+                </div>
+                <div class="col-4 col-sm-2 col-xl-4 offset-3 offset-sm-1 offset-md-2 offset-xl-3">
+                  <input id="sunday2From" class="form-control" type="text" value="">
+                </div>
+                <div class="col-1 text-center px-4 d-sm-none d-xl-block">-</div>
+                <div class="col-4 col-sm-2 col-xl-4">
+                  <input id="sunday2To" class="form-control" type="text" value="">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+  <script src="/js/jquery/jquery.min.js"></script>
+  <script src="/js/popper/popper.min.js"></script>
+  <script src="/js/bootstrap/bootstrap.min.js"></script>
+</body>
+
+</html>
