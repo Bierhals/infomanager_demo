@@ -1,7 +1,11 @@
+import { DefaultListMetadata } from '../shared/types';
+
 // actionTypes
 export const FETCH_CUSTOMERS = '@@customers/FETCH_CUSTOMERS';
 export const FETCH_CUSTOMERS_SUCCESS = '@@customers/FETCH_CUSTOMERS_SUCCESS';
 export const FETCH_CUSTOMERS_FAILED = '@@customers/FETCH_CUSTOMERS_FAILED';
+export const PAGE_NEXT = '@@customers/PAGE_NEXT';
+export const PAGE_PREVIOUS = '@@customers/PAGE_PREVIOUS';
 export const TOGGLE_FILTER = '@@customers/TOGGLE_FILTER';
 export const SET_FILTER = '@@customers/SET_FILTER';
 
@@ -55,7 +59,10 @@ export interface Filter {
 
 export interface CustomersState {
   readonly customerlist: {
-    readonly data: (CustomerPerson | CustomerShop)[],
+    readonly items: Customer[],
+    readonly totalCount: number,
+    readonly offset: number,
+    readonly limit: number,
     readonly filter: Filter,
     readonly error: Error | string | null,
     readonly loading: boolean,
@@ -69,7 +76,7 @@ export interface FetchCustomersAction {
 
 export interface FetchCustomersSuccessAction {
   type: typeof FETCH_CUSTOMERS_SUCCESS,
-  data: (CustomerPerson | CustomerShop)[]
+  data:  DefaultListMetadata<Customer[]>
 }
 
 export interface FetchCustomersFailedAction {
@@ -86,4 +93,12 @@ export interface SetFilterAction {
   filter: Filter
 }
 
-export type CustomersActionTypes = FetchCustomersAction | FetchCustomersSuccessAction | FetchCustomersFailedAction | ToggleFilterAction | SetFilterAction;
+export interface PageNextAction {
+  type: typeof PAGE_NEXT
+}
+
+export interface PagePreviousAction {
+  type: typeof PAGE_PREVIOUS
+}
+
+export type CustomersActionTypes = FetchCustomersAction | FetchCustomersSuccessAction | FetchCustomersFailedAction | ToggleFilterAction | SetFilterAction | PageNextAction | PagePreviousAction;

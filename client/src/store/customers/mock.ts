@@ -1,4 +1,5 @@
 import { Customer, CustomerShop, CustomerPerson } from './types';
+import { DefaultListMetadata } from '../shared/types';
 
 let customers: (CustomerPerson | CustomerShop)[] = [
   {
@@ -173,7 +174,7 @@ let customers: (CustomerPerson | CustomerShop)[] = [
     status: 'Aktiv',
   },
   {
-    id: 25008496,
+    id: 25008657,
     type: 'Person',
     name: 'Neuhaus',
     firstname: 'Moritz',
@@ -292,8 +293,13 @@ let customers: (CustomerPerson | CustomerShop)[] = [
   },
 ];
 
-export const fetchCustomers = (): Promise<Customer[]> => {
+export const fetchCustomers = (limit = 15, offset = 0): Promise<DefaultListMetadata<Customer[]>> => {
   return new Promise((resolve) => {
-    setTimeout(() => resolve(customers), 1000);
+    setTimeout(() => resolve({
+      items: customers.slice(offset, offset+limit),
+      offset,
+      limit,
+      totalCount: customers.length
+    }), 400);
   });
 };

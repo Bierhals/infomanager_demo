@@ -1,22 +1,29 @@
-import { 
+import {
   CustomersState,
-  CustomersActionTypes, 
+  CustomersActionTypes,
   FETCH_CUSTOMERS,
   FETCH_CUSTOMERS_SUCCESS,
   FETCH_CUSTOMERS_FAILED,
   TOGGLE_FILTER,
   SET_FILTER,
+  PAGE_NEXT,
+  PAGE_PREVIOUS,
   FetchCustomersAction,
   FetchCustomersSuccessAction,
   FetchCustomersFailedAction,
   ToggleFilterAction,
   SetFilterAction,
+  PageNextAction,
+  PagePreviousAction,
   CustomerStatus,
 } from './types';
 
 const initialState: CustomersState = {
   customerlist: {
-    data: [],
+    items: [],
+    totalCount: 0,
+    offset: 0,
+    limit: 15,
     loading: false,
     error: null,
     filter: {
@@ -43,7 +50,7 @@ function fetchCustomersSuccess(state: CustomersState, action: FetchCustomersSucc
     ...state,
     customerlist: {
       ...state.customerlist,
-      data: action.data,
+      ...action.data,
       error: null,
       loading: false,
     },
@@ -77,8 +84,39 @@ function setFilter(state: CustomersState, action: SetFilterAction) {
     customerlist: {
       ...state.customerlist,
       filter: action.filter,
+      offset: 0,
     },
   };
+}
+
+function pageNext(state: CustomersState, action: PageNextAction) {
+  const newOffset = state.customerlist.offset + state.customerlist.limit;
+
+  if (newOffset > state.customerlist.totalCount)
+    return state;
+  else
+    return {
+      ...state,
+      customerlist: {
+        ...state.customerlist,
+        offset: newOffset,
+      },
+    };
+}
+
+function pagePrevious(state: CustomersState, action: PagePreviousAction) {
+  const newOffset = state.customerlist.offset - state.customerlist.limit;
+
+  if (newOffset < 0)
+    return state;
+  else
+    return {
+      ...state,
+      customerlist: {
+        ...state.customerlist,
+        offset: newOffset,
+      },
+    };
 }
 
 export function reducer(state = initialState, action: CustomersActionTypes) {
@@ -88,6 +126,8 @@ export function reducer(state = initialState, action: CustomersActionTypes) {
     case FETCH_CUSTOMERS_FAILED: return fetchCustomersFailed(state, action);
     case TOGGLE_FILTER: return toggleFilter(state, action);
     case SET_FILTER: return setFilter(state, action);
+    case PAGE_NEXT: return pageNext(state, action);
+    case PAGE_PREVIOUS: return pagePrevious(state, action);
     /* case actionTypes.FETCH_INGREDIENTS_FAILED: return fetchIngredientsFailed(state, action) */
     default: return state;
   }

@@ -17,14 +17,19 @@ import { Filter, CustomerStatus } from '../../../store/customers/types'
 
 
 type Props = {
-  name: string,
-  filter: Filter,
+  readonly name: string,
+  readonly totalCount: number,
+  readonly offset: number,
+  readonly limit: number,
+  readonly filter: Filter,
   toggleFilter: () => void,
-  setFilter: (filter: Filter) => void
+  setFilter: (filter: Filter) => void,
+  pagePrevious: () => void,
+  pageNext: () => void,
 };
 
 const DefaultListPageHeaderComponent: FunctionComponent<Props> = (props) => {
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement | HTMLAnchorElement>) => {
+  const handleFilterClick = (event: React.MouseEvent<HTMLButtonElement | HTMLAnchorElement>) => {
     event.preventDefault();
 
     props.setFilter({
@@ -33,6 +38,9 @@ const DefaultListPageHeaderComponent: FunctionComponent<Props> = (props) => {
     });
   }
 
+  const pageFrom = props.totalCount === 0 ? 0 : props.offset+1;
+  const pageTo = props.offset + props.limit < props.totalCount ? props.offset + props.limit : props.totalCount;
+
   return (
     <Card role="page-header" bg="light">
       <Card.Body className="px-4 py-3 d-flex flex-row">
@@ -40,17 +48,17 @@ const DefaultListPageHeaderComponent: FunctionComponent<Props> = (props) => {
           <div className="form-inline mb-0">
             <h3>{props.name}</h3>
             <DropdownButton id="dropdownFilter" title={props.filter.status} variant="">
-              <Dropdown.Item name={CustomerStatus.All} onClick={handleClick}>Alle</Dropdown.Item>
-              <Dropdown.Item name={CustomerStatus.Active} onClick={handleClick}>Aktive</Dropdown.Item>
-              <Dropdown.Item name={CustomerStatus.Inactive} onClick={handleClick}>Inaktive</Dropdown.Item>
+              <Dropdown.Item name={CustomerStatus.All} onClick={handleFilterClick}>Alle</Dropdown.Item>
+              <Dropdown.Item name={CustomerStatus.Active} onClick={handleFilterClick}>Aktive</Dropdown.Item>
+              <Dropdown.Item name={CustomerStatus.Inactive} onClick={handleFilterClick}>Inaktive</Dropdown.Item>
             </DropdownButton>
           </div>
         </div>
         <div>
-          <span className="mr-3 align-middle">1 - 15 von 587</span>
+          <span className="mr-3 align-middle">{pageFrom} - {pageTo} von {props.totalCount}</span>
           <ButtonGroup aria-label="pagination" className="mr-2">
-            <Button variant="secondary"><FontAwesomeIcon icon={faCaretLeft} /></Button>
-            <Button variant="secondary"><FontAwesomeIcon icon={faCaretRight} /></Button>
+            <Button variant="secondary" onClick={props.pagePrevious}><FontAwesomeIcon icon={faCaretLeft} /></Button>
+            <Button variant="secondary" onClick={props.pageNext}><FontAwesomeIcon icon={faCaretRight} /></Button>
           </ButtonGroup>
           <Button variant="primary" onClick={props.toggleFilter}><FontAwesomeIcon icon={faFilter} /></Button>
         </div>

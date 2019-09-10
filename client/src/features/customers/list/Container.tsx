@@ -9,38 +9,37 @@ import CustomerListComponent from './List';
 
 import {
   CustomersActionTypes,
-  CustomerShop,
-  CustomerPerson,
+  Customer,
   Filter,
 } from '../../../store/customers/types';
 import {
   fetchCustomers,
   toggleFilter,
   setFilter,
+  pagePrevious,
+  pageNext
 } from '../../../store/customers/actions'
 import { RootState } from '../../../store/types';
 
-const styles = {
-  th_pointer: {
-    cursor: "pointer"
-  }
-}
-
 type Props = {
   customerlist: {
-    readonly data: (CustomerPerson | CustomerShop)[],
+    readonly items: Customer[],
+    readonly loading: boolean,
     readonly showFilter: boolean,
     readonly filter: Filter
-  },
-  loadCustomers: () => void,
+    readonly totalCount: number,
+    readonly offset: number,
+    readonly limit: number,  },
+  fetchCustomers: () => void,
   toggleFilter: () => void,
   setFilter: (filter: Filter) => void,
+  pagePrevious: () => void,
+  pageNext: () => void,
 };
 
 class CustomersListContainer extends Component<Props> {
   componentDidMount() {
-    const { loadCustomers } = this.props;
-    loadCustomers();
+    this.props.fetchCustomers();
   }
 
   render() {
@@ -49,10 +48,10 @@ class CustomersListContainer extends Component<Props> {
       filterElement = (<CustomersListFilter filter={this.props.customerlist.filter} setFilter={this.props.setFilter} />);
 
     return (
-      <DefaultLayout pageHeader={<PageHeader name="Kunden" filter={this.props.customerlist.filter} toggleFilter={this.props.toggleFilter} setFilter={this.props.setFilter} />}>
+      <DefaultLayout pageHeader={<PageHeader name="Kunden" filter={this.props.customerlist.filter} toggleFilter={this.props.toggleFilter} setFilter={this.props.setFilter} pageNext={this.props.pageNext} pagePrevious={this.props.pagePrevious} totalCount={this.props.customerlist.totalCount} limit={this.props.customerlist.limit} offset={this.props.customerlist.offset} />}>
         { filterElement }
         <div id="content" className="flex-grow-1">
-          <CustomerListComponent loadCustomers={this.props.loadCustomers} customerlist={this.props.customerlist} />
+          <CustomerListComponent customerlist={this.props.customerlist} />
         </div>
       </DefaultLayout>
     )
@@ -67,9 +66,11 @@ function mapStateToProps(state: RootState) {
 
 function mapDispatchToProps(dispatch: Dispatch<CustomersActionTypes>) {
   return {
-    loadCustomers: () => dispatch(fetchCustomers()),
+    fetchCustomers: () => dispatch(fetchCustomers()),
     toggleFilter: () => dispatch(toggleFilter()),
     setFilter: (filter: Filter) => dispatch(setFilter(filter)),
+    pagePrevious: () => dispatch(pagePrevious()),
+    pageNext: () => dispatch(pageNext()),
   };
 }
 

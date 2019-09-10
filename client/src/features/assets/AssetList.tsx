@@ -13,7 +13,7 @@ const styles = {
 }
 
 const AssetListComponent: FunctionComponent = props => (
-  <DefaultLayout pageHeader={<PageHeader name="Inventar" filter={{status:CustomerStatus.All}} toggleFilter={() => {}} setFilter={() => {}}/>}>
+  <DefaultLayout pageHeader={<PageHeader name="Inventar" filter={{status:CustomerStatus.All}} toggleFilter={() => {}} setFilter={() => {}} pageNext={() => {}} pagePrevious={() => {}} totalCount={0} limit={15} offset={0} />}>
     <div id="content" className="flex-grow-1">
       <div className="table-responsive">
         <table className="table table-hover table-striped table-bordered mb-0">

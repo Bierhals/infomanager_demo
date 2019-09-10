@@ -1,10 +1,15 @@
 import React, { FunctionComponent } from 'react';
 import { Table } from 'react-bootstrap';
 import { Link } from "react-router-dom";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+  faSpinner,
+} from '@fortawesome/free-solid-svg-icons';
 
 import {
-  CustomerShop,
+  Customer,
   CustomerPerson,
+  CustomerShop,
   Filter,
 } from '../../../store/customers/types';
 
@@ -16,15 +21,15 @@ const styles = {
 
 type Props = {
   customerlist: {
-    readonly data: (CustomerPerson | CustomerShop)[],
+    readonly items: Customer[],
     readonly showFilter: boolean,
-    readonly filter: Filter
-  },
-  loadCustomers: () => void,
+    readonly filter: Filter,
+    readonly loading: boolean,
+  }
 };
 
 const CustomersListComponent: FunctionComponent<Props> = props => {
-  const customerName = (item: CustomerPerson | CustomerShop): string => {
+  const customerName = (item: Customer): string => {
     let name = item.name;
     if (item.type === 'Person') {
       const itemP = item as CustomerPerson;
@@ -58,6 +63,37 @@ const CustomersListComponent: FunctionComponent<Props> = props => {
     return address;
   }
 
+  const TableRows = () => {
+    if (props.customerlist.loading) {
+      return (
+        <tr>
+          <td colSpan={6} className="text-center">
+            <h1><FontAwesomeIcon icon={faSpinner} spin /></h1>
+          </td>
+        </tr>
+      )
+    } else {
+      return (
+        <>
+          {props.customerlist.items.map((customer) =>
+            <tr key={customer.id}>
+              <td>
+                <Link to={'/customers/' + customer.id.toString()}>
+                  {customer.id}
+                </Link>
+              </td>
+              <td>{customerName(customer)}</td>
+              <td>{customer.company}</td>
+              <td>{customer.department}</td>
+              <td>{customerAddress(customer)}</td>
+              <td>{customerPhone(customer)}</td>
+            </tr>
+          )}
+        </>
+      )
+    }
+  }
+
   return (
     <Table striped bordered hover responsive className="mb-0">
       <thead className="table-dark bg-primary text-nowrap">
@@ -70,21 +106,9 @@ const CustomersListComponent: FunctionComponent<Props> = props => {
           <th style={styles.th_pointer}>Telefon <i className="fas fa-sort"></i></th>
         </tr>
       </thead>
+
       <tbody className="text-nowrap">
-        {props.customerlist.data.map((customer) =>
-          <tr key={customer.id}>
-            <td>
-              <Link to={'/customers/' + customer.id.toString()}>
-                {customer.id}
-              </Link>
-            </td>
-            <td>{customerName(customer)}</td>
-            <td>{customer.company}</td>
-            <td>{customer.department}</td>
-            <td>{customerAddress(customer)}</td>
-            <td>{customerPhone(customer)}</td>
-          </tr>
-        )}
+        <TableRows />
       </tbody>
     </Table>)
 }
