@@ -1,5 +1,5 @@
 {
-	"folders": [
+  "folders": [
     {
       "path": "server"
     },
@@ -7,14 +7,16 @@
       "path": "client"
     },
     {
-      "path": "client_ts"
-    },
-    {
       "path": "bootstrap-demo"
     }
   ],
-	"settings": {
+  "settings": {
     "javascript.validate.enable": false,
-    "eslint.validate": [ "javascript", "html" ]
+    "eslint.validate": [ 
+      "javascript",
+	  "typescript",
+      "typescriptreact",
+      "html",
+    ]
   }
 }
