@@ -2,10 +2,13 @@ import {
   Customer,
   CustomerShop,
   CustomerPerson,
+  CustomerStatus,
+  Filter
 } from './types';
 import {
   DefaultListMetadata,
-  Sort
+  Sort,
+  SortDirection,
 } from '../shared/types';
 
 let customers: (CustomerPerson | CustomerShop)[] = [
@@ -265,7 +268,7 @@ let customers: (CustomerPerson | CustomerShop)[] = [
       city: 'Halle'
     },
     phone: '0345-6208918',
-    status: 'Eröffnet',
+    status: 'Geschlossen',
   },
   {
     id: 9001,
@@ -300,40 +303,107 @@ let customers: (CustomerPerson | CustomerShop)[] = [
   },
 ];
 
-export const fetchCustomers = (limit = 15, offset = 0, sort: Sort = { field: 'id', direction: 'asc' }): Promise<DefaultListMetadata<Customer[]>> => {
+export const fetchCustomers = (limit = 15, offset = 0, sort: Sort = { field: 'id', direction: SortDirection.asc }, filter?: Filter): Promise<DefaultListMetadata<Customer[]>> => {
   return new Promise((resolve) => {
     setTimeout(() => {
-      const items = [...customers];
-      items.sort((a: any, b: any) => {
-        return a[sort.field] as any < b[sort.field] as any ? -1 : 1
-      });
+      const itemsFiltered = [...customers]
+        .filter((item) => {
+          if (filter) {
+            let found = true;
 
-      resolve({
-        items: [...customers]
-          .sort((a: any, b: any) => {
-            let valueA: any;
-            let valueB: any;
-
-            if (sort.field === 'phone') {
-              valueA = a['phone'] || a['mobile'] || '' as any;
-              valueB = b['phone'] || b['mobile'] || '' as any;
-            } else if (sort.field === 'address') {
-              valueA = a['address']['city'] + ',' + (a['address']['addition'] || '') + a['address']['street'] || '' as any;
-              valueB = b['address']['city'] + ',' + (b['address']['addition'] || '') + b['address']['street'] || '' as any;
-            } else {
-              valueA = a[sort.field];
-              valueB = b[sort.field];  
+            switch (filter.status) {
+              case CustomerStatus.Active:
+                found = item.status === 'Aktiv' || item.status === 'Eröffnet'
+                break;
+              case CustomerStatus.Inactive:
+                found = item.status !== 'Aktiv' && item.status !== 'Eröffnet'
+                break;
             }
 
-            if (sort.direction === 'asc')
-              return valueA < valueB ? -1 : valueA > valueB ? 1 : 0;
-            else
-              return valueA < valueB ? 1 : valueA > valueB ? -1 : 0;
-          })
-          .slice(offset, offset + limit),
+            if (found && filter.name)
+              found = item.name.toLowerCase().indexOf(filter.name.toLowerCase()) >= 0;
+            if (found && filter.firstname) {
+              if (item.type === 'Person') {
+                const person = item as CustomerPerson;
+                if (person.firstname)
+                  found = person.firstname.toLowerCase().indexOf(filter.firstname.toLowerCase()) >= 0;
+                else
+                  found = false;
+              }
+              else
+                found = false;
+            }
+
+            if (found && filter.company) {
+              if (item.company)
+                found = item.company.toLowerCase().indexOf(filter.company.toLowerCase()) >= 0;
+              else
+                found = false;
+            }
+            if (found && filter.department) {
+              if (item.department)
+                found = item.department.toLowerCase().indexOf(filter.department.toLowerCase()) >= 0;
+              else
+                found = false;
+            }
+
+            if (found && filter.city) {
+              if (item.address)
+                found = item.address.city.toLowerCase().indexOf(filter.city.toLowerCase()) >= 0;
+              else
+                found = false;
+            }
+            if (found && filter.zip) {
+              if (item.address)
+                found = item.address.zip.toLowerCase().indexOf(filter.zip.toLowerCase()) >= 0;
+              else
+                found = false;
+            }
+            if (found && filter.street) {
+              if (item.address)
+                found = item.address.street.toLowerCase().indexOf(filter.street.toLowerCase()) >= 0;
+              else
+                found = false;
+            }
+
+            if (found && filter.phone) {
+              found = false;
+              if (item.phone)
+                found = item.phone.toLowerCase().indexOf(filter.phone.toLowerCase()) >= 0;
+              if (item.mobile)
+                found = found || item.mobile.toLowerCase().indexOf(filter.phone.toLowerCase()) >= 0;
+            }
+
+            return found;
+          } else
+            return true;
+        })
+        .sort((a: any, b: any) => {
+          let valueA: any;
+          let valueB: any;
+
+          if (sort.field === 'phone') {
+            valueA = a['phone'] || a['mobile'] || '' as any;
+            valueB = b['phone'] || b['mobile'] || '' as any;
+          } else if (sort.field === 'address') {
+            valueA = a['address']['city'] + ',' + (a['address']['addition'] || '') + a['address']['street'] || '' as any;
+            valueB = b['address']['city'] + ',' + (b['address']['addition'] || '') + b['address']['street'] || '' as any;
+          } else {
+            valueA = a[sort.field];
+            valueB = b[sort.field];
+          }
+
+          if (sort.direction === SortDirection.asc)
+            return valueA < valueB ? -1 : valueA > valueB ? 1 : 0;
+          else
+            return valueA < valueB ? 1 : valueA > valueB ? -1 : 0;
+        });
+
+      resolve({
+        items: itemsFiltered.slice(offset, offset + limit),
         offset,
         limit,
-        totalCount: customers.length,
+        totalCount: itemsFiltered.length,
         sort
       })
     }, 400);

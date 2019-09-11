@@ -39,19 +39,19 @@ const CustomersListFilterComponent: FunctionComponent<Props> = props => {
           <div className="col-sm-4 col-md-12">
             <div className="form-group">
               <label htmlFor="filterCompany">Firma</label>
-              <input type="text" className="form-control" id="filterCompany" />
+              <input type="text" className="form-control" id="filterCompany" name="company" value={props.filter.company} onChange={handleChange} />
             </div>
           </div>
           <div className="col-sm-4 col-md-12">
             <div className="form-group">
               <label htmlFor="filterDepartment">Abteilung</label>
-              <input type="text" className="form-control" id="filterDepartment" />
+              <input type="text" className="form-control" id="filterDepartment" name="department" value={props.filter.department} onChange={handleChange}/>
             </div>
           </div>
           <div className="col-sm-4 col-md-12">
             <div className="form-group">
               <label htmlFor="filterPhone">Telefon</label>
-              <input type="text" className="form-control" id="filterPhone" />
+              <input type="text" className="form-control" id="filterPhone" name="phone" value={props.filter.phone} onChange={handleChange} />
             </div>
           </div>
         </div>
@@ -59,19 +59,19 @@ const CustomersListFilterComponent: FunctionComponent<Props> = props => {
           <div className="col-sm-3 col-md-12">
             <div className="form-group">
               <label htmlFor="filterZIP">PLZ</label>
-              <input type="text" className="form-control" id="filterZIP" />
+              <input type="text" className="form-control" id="filterZIP" name="zip" value={props.filter.zip} onChange={handleChange} />
             </div>
           </div>
           <div className="col-sm-4 col-md-12">
             <div className="form-group">
               <label htmlFor="filterCity">Ort</label>
-              <input type="text" className="form-control" id="filterCity" />
+              <input type="text" className="form-control" id="filterCity" name="city" value={props.filter.city} onChange={handleChange} />
             </div>
           </div>
           <div className="col-sm-5 col-md-12">
             <div className="form-group">
               <label htmlFor="filterStreet">Stra&szlig;e</label>
-              <input type="text" className="form-control" id="filterStreet" />
+              <input type="text" className="form-control" id="filterStreet" name="street" value={props.filter.street} onChange={handleChange} />
             </div>
           </div>
         </div>

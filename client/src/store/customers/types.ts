@@ -26,7 +26,7 @@ export interface Customer {
   eMail?: string,
   phone?: string,
   mobile?: string,
-  status?: string
+  status: string
 }
 
 export interface CustomerShop extends Customer {
@@ -55,7 +55,13 @@ export enum CustomerStatus {
 export interface Filter {
   status: CustomerStatus,
   name?: string,
-  firstname?: string
+  firstname?: string,
+  company?: string,
+  department?: string,
+  phone?: string,
+  zip?: string,
+  city?: string,
+  street?: string
 }
 
 export interface CustomersState {

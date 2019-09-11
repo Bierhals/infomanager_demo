@@ -75,7 +75,7 @@ const CustomersListComponent: FunctionComponent<Props> = props => {
     if (props.customerlist.loading) {
       return (
         <tr>
-          <td colSpan={6} className="text-center">
+          <td colSpan={7} className="text-center">
             <h1><FontAwesomeIcon icon={faSpinner} spin /></h1>
           </td>
         </tr>
@@ -95,6 +95,7 @@ const CustomersListComponent: FunctionComponent<Props> = props => {
               <td>{customer.department}</td>
               <td>{customerAddress(customer)}</td>
               <td>{customerPhone(customer)}</td>
+              <td>{customer.status}</td>
             </tr>
           )}
         </>
@@ -136,6 +137,7 @@ const CustomersListComponent: FunctionComponent<Props> = props => {
           {ColumnHeader('Abteilung', 'department')}
           {ColumnHeader('Adresse', 'address')}
           {ColumnHeader('Telefon', 'phone')}
+          {ColumnHeader('Status', 'status')}
         </tr>
       </thead>
       <tbody className="text-nowrap">

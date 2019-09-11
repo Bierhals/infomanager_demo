@@ -19,6 +19,9 @@ import {
   SortFieldAction,
   CustomerStatus,
 } from './types';
+import {
+  SortDirection
+} from '../shared/types';
 
 const initialState: CustomersState = {
   customerlist: {
@@ -30,8 +33,8 @@ const initialState: CustomersState = {
       status: CustomerStatus.All
     },
     sort: {
-      field: 'address',
-      direction: 'asc'
+      field: 'name',
+      direction: SortDirection.asc,
     },
     error: null,
     loading: false,
@@ -98,7 +101,7 @@ function setFilter(state: CustomersState, action: SetFilterAction) {
 function pageNext(state: CustomersState, action: PageNextAction) {
   const newOffset = state.customerlist.offset + state.customerlist.limit;
 
-  if (newOffset > state.customerlist.totalCount)
+  if (newOffset+1 > state.customerlist.totalCount)
     return state;
   else
     return {
@@ -132,7 +135,7 @@ function sortField(state: CustomersState, action: SortFieldAction) {
       ...state.customerlist,
       sort: {
         field: action.field,
-        direction: state.customerlist.sort.field !== action.field ? 'asc' : state.customerlist.sort.direction === 'asc' ? 'desc' : 'asc'
+        direction: state.customerlist.sort.field !== action.field ? SortDirection.asc : state.customerlist.sort.direction === SortDirection.asc ? SortDirection.desc : SortDirection.asc
       },
       offset: 0,
     },

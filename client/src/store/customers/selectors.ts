@@ -6,6 +6,7 @@ export const customerRequestParams = (state: RootState) => {
   return {
     offset: state.customers.customerlist.offset,
     limit: state.customers.customerlist.limit,
-    sort: state.customers.customerlist.sort
+    sort: state.customers.customerlist.sort,
+    filter: state.customers.customerlist.filter,
   }
 };

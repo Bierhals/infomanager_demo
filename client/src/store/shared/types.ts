@@ -1,6 +1,11 @@
+export enum SortDirection {
+  asc = 'asc',
+  desc = 'desc',
+}
+
 export interface Sort {
   readonly field: string,
-  readonly direction: string,
+  readonly direction: SortDirection,
 }
 
 export interface DefaultListMetadata<T> {

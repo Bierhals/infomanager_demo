@@ -17,6 +17,7 @@ import {
   PAGE_PREVIOUS,
   PAGE_NEXT,
   SORT_FIELD,
+  Filter,
 } from './types';
 import { Sort } from '../shared/types';
 import { customerRequestParams } from './selectors';
@@ -24,8 +25,8 @@ import { fetchCustomers as ApifetchtCustomers } from './mock';
 
 export function* fetchCustomersSaga() {
   try {
-    const params: { offset: number, limit: number, sort: Sort } = yield select(customerRequestParams);
-    yield put(fetchCustomersSuccess(yield call(ApifetchtCustomers, params.limit, params.offset, params.sort)));
+    const params: { offset: number, limit: number, sort: Sort, filter?: Filter } = yield select(customerRequestParams);
+    yield put(fetchCustomersSuccess(yield call(ApifetchtCustomers, params.limit, params.offset, params.sort, params.filter)));
   } catch (err) {
     yield put(fetchCustomersFailed(err));
   }
