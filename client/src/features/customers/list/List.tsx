@@ -4,6 +4,9 @@ import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faSpinner,
+  faSort,
+  faSortUp,
+  faSortDown
 } from '@fortawesome/free-solid-svg-icons';
 
 import {
@@ -12,6 +15,9 @@ import {
   CustomerShop,
   Filter,
 } from '../../../store/customers/types';
+import {
+  Sort
+} from '../../../store/shared/types';
 
 const styles = {
   th_pointer: {
@@ -25,7 +31,9 @@ type Props = {
     readonly showFilter: boolean,
     readonly filter: Filter,
     readonly loading: boolean,
-  }
+    readonly sort: Sort
+  },
+  sortField: (field: string) => void,
 };
 
 const CustomersListComponent: FunctionComponent<Props> = props => {
@@ -94,19 +102,42 @@ const CustomersListComponent: FunctionComponent<Props> = props => {
     }
   }
 
+  const handleHeaderClick = (event: React.MouseEvent<HTMLTableCellElement>) => {
+    event.preventDefault();
+
+    props.sortField(event.currentTarget.title);
+  }
+
+  const ColumnHeader = (name: string, field: string) => {
+    let sortIcon = faSort;
+
+    if (field === props.customerlist.sort.field) {
+      if (props.customerlist.sort.direction === 'asc')
+        sortIcon = faSortUp;
+      else 
+        sortIcon = faSortDown;
+    }
+
+    return (
+      <th title={field} style={styles.th_pointer} onClick={handleHeaderClick}>
+        {name}&nbsp;
+        <FontAwesomeIcon icon={sortIcon} />
+      </th>
+    );
+  }
+
   return (
     <Table striped bordered hover responsive className="mb-0">
       <thead className="table-dark bg-primary text-nowrap">
         <tr>
-          <th style={styles.th_pointer}># <i className="fas fa-sort-up"></i></th>
-          <th style={styles.th_pointer}>Name <i className="fas fa-sort"></i></th>
-          <th style={styles.th_pointer}>Firma <i className="fas fa-sort"></i></th>
-          <th style={styles.th_pointer}>Abteilung <i className="fas fa-sort"></i></th>
-          <th style={styles.th_pointer}>Adresse <i className="fas fa-sort"></i></th>
-          <th style={styles.th_pointer}>Telefon <i className="fas fa-sort"></i></th>
+          {ColumnHeader('#','id')}
+          {ColumnHeader('Name', 'name')}
+          {ColumnHeader('Firma', 'company')}
+          {ColumnHeader('Abteilung', 'department')}
+          {ColumnHeader('Adresse', 'address')}
+          {ColumnHeader('Telefon', 'phone')}
         </tr>
       </thead>
-
       <tbody className="text-nowrap">
         <TableRows />
       </tbody>

@@ -8,6 +8,7 @@ import {
   SET_FILTER,
   PAGE_NEXT,
   PAGE_PREVIOUS,
+  SORT_FIELD,
   FetchCustomersAction,
   FetchCustomersFailedAction,
   FetchCustomersSuccessAction,
@@ -15,6 +16,7 @@ import {
   SetFilterAction,
   PageNextAction,
   PagePreviousAction,
+  SortFieldAction,
 } from './types';
 import { DefaultListMetadata } from '../shared/types';
 
@@ -60,5 +62,12 @@ export function pageNext(): PageNextAction {
 export function pagePrevious(): PagePreviousAction {
   return {
     type: PAGE_PREVIOUS
+  };
+}
+
+export function sortField(field: string): SortFieldAction {
+  return {
+    type: SORT_FIELD,
+    field
   };
 }

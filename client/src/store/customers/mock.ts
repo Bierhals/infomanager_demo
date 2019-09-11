@@ -1,5 +1,12 @@
-import { Customer, CustomerShop, CustomerPerson } from './types';
-import { DefaultListMetadata } from '../shared/types';
+import {
+  Customer,
+  CustomerShop,
+  CustomerPerson,
+} from './types';
+import {
+  DefaultListMetadata,
+  Sort
+} from '../shared/types';
 
 let customers: (CustomerPerson | CustomerShop)[] = [
   {
@@ -86,7 +93,7 @@ let customers: (CustomerPerson | CustomerShop)[] = [
     company: 'ACME GmbH',
     department: 'Finanzen',
     position: 'Sachbearbeiter',
-    supervisor: 'Taube, Gregor',
+    supervisor: 'Wenig, Sylvia',
     address: {
       addition: 'Zentrale',
       street: 'Kaiserdamm 111',
@@ -138,11 +145,11 @@ let customers: (CustomerPerson | CustomerShop)[] = [
   {
     id: 25002379,
     type: 'Person',
-    name: 'Hillmann',
-    firstname: 'Danny',
+    name: 'Braun',
+    firstname: 'Gerlinde',
     company: 'Nordwind AG',
-    department: 'Gebiet Süd-Ost',
-    position: 'Vertriebsleiter',
+    department: 'EDV',
+    position: 'Bereichsleiter',
     supervisor: 'Taube, Gregor',
     address: {
       addition: 'Zentrale',
@@ -150,8 +157,8 @@ let customers: (CustomerPerson | CustomerShop)[] = [
       zip: '11111',
       city: 'Berlin'
     },
-    eMail: 'danny.hillmann@nordwind.test',
-    mobile: '0151-7475797',
+    eMail: 'gerlinde.braun@nordwind.test',
+    mobile: '030-123456-1200',
     status: 'Aktiv',
   },
   {
@@ -293,13 +300,42 @@ let customers: (CustomerPerson | CustomerShop)[] = [
   },
 ];
 
-export const fetchCustomers = (limit = 15, offset = 0): Promise<DefaultListMetadata<Customer[]>> => {
+export const fetchCustomers = (limit = 15, offset = 0, sort: Sort = { field: 'id', direction: 'asc' }): Promise<DefaultListMetadata<Customer[]>> => {
   return new Promise((resolve) => {
-    setTimeout(() => resolve({
-      items: customers.slice(offset, offset+limit),
-      offset,
-      limit,
-      totalCount: customers.length
-    }), 400);
+    setTimeout(() => {
+      const items = [...customers];
+      items.sort((a: any, b: any) => {
+        return a[sort.field] as any < b[sort.field] as any ? -1 : 1
+      });
+
+      resolve({
+        items: [...customers]
+          .sort((a: any, b: any) => {
+            let valueA: any;
+            let valueB: any;
+
+            if (sort.field === 'phone') {
+              valueA = a['phone'] || a['mobile'] || '' as any;
+              valueB = b['phone'] || b['mobile'] || '' as any;
+            } else if (sort.field === 'address') {
+              valueA = a['address']['city'] + ',' + (a['address']['addition'] || '') + a['address']['street'] || '' as any;
+              valueB = b['address']['city'] + ',' + (b['address']['addition'] || '') + b['address']['street'] || '' as any;
+            } else {
+              valueA = a[sort.field];
+              valueB = b[sort.field];  
+            }
+
+            if (sort.direction === 'asc')
+              return valueA < valueB ? -1 : valueA > valueB ? 1 : 0;
+            else
+              return valueA < valueB ? 1 : valueA > valueB ? -1 : 0;
+          })
+          .slice(offset, offset + limit),
+        offset,
+        limit,
+        totalCount: customers.length,
+        sort
+      })
+    }, 400);
   });
 };

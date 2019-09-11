@@ -5,6 +5,7 @@ import {
 export const customerRequestParams = (state: RootState) => {
   return {
     offset: state.customers.customerlist.offset,
-    limit: state.customers.customerlist.limit
+    limit: state.customers.customerlist.limit,
+    sort: state.customers.customerlist.sort
   }
 };

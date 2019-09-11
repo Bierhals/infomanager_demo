@@ -1,4 +1,4 @@
-import { DefaultListMetadata } from '../shared/types';
+import { DefaultListMetadata, Sort } from '../shared/types';
 
 // actionTypes
 export const FETCH_CUSTOMERS = '@@customers/FETCH_CUSTOMERS';
@@ -8,6 +8,7 @@ export const PAGE_NEXT = '@@customers/PAGE_NEXT';
 export const PAGE_PREVIOUS = '@@customers/PAGE_PREVIOUS';
 export const TOGGLE_FILTER = '@@customers/TOGGLE_FILTER';
 export const SET_FILTER = '@@customers/SET_FILTER';
+export const SORT_FIELD = '@@customers/SORT_FIELD';
 
 export interface Customer {
   id: number,
@@ -64,6 +65,7 @@ export interface CustomersState {
     readonly offset: number,
     readonly limit: number,
     readonly filter: Filter,
+    readonly sort: Sort,
     readonly error: Error | string | null,
     readonly loading: boolean,
     readonly showFilter: boolean,
@@ -101,4 +103,9 @@ export interface PagePreviousAction {
   type: typeof PAGE_PREVIOUS
 }
 
-export type CustomersActionTypes = FetchCustomersAction | FetchCustomersSuccessAction | FetchCustomersFailedAction | ToggleFilterAction | SetFilterAction | PageNextAction | PagePreviousAction;
+export interface SortFieldAction {
+  type: typeof SORT_FIELD,
+  field: string
+}
+
+export type CustomersActionTypes = FetchCustomersAction | FetchCustomersSuccessAction | FetchCustomersFailedAction | ToggleFilterAction | SetFilterAction | PageNextAction | PagePreviousAction | SortFieldAction;

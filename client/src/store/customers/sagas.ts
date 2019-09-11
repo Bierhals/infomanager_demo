@@ -16,15 +16,16 @@ import {
   SET_FILTER,
   PAGE_PREVIOUS,
   PAGE_NEXT,
-  FetchCustomersAction
+  SORT_FIELD,
 } from './types';
+import { Sort } from '../shared/types';
 import { customerRequestParams } from './selectors';
 import { fetchCustomers as ApifetchtCustomers } from './mock';
 
-export function* fetchCustomersSaga(action: FetchCustomersAction) {
+export function* fetchCustomersSaga() {
   try {
-    const params: { offset:number, limit:number } = yield select(customerRequestParams);
-    yield put(fetchCustomersSuccess(yield call(ApifetchtCustomers, params.limit, params.offset)));
+    const params: { offset: number, limit: number, sort: Sort } = yield select(customerRequestParams);
+    yield put(fetchCustomersSuccess(yield call(ApifetchtCustomers, params.limit, params.offset, params.sort)));
   } catch (err) {
     yield put(fetchCustomersFailed(err));
   }
@@ -47,6 +48,7 @@ export default function* root() {
   yield all([
     takeLatest(FETCH_CUSTOMERS, fetchCustomersSaga),
     takeLatest(SET_FILTER, setFilterSaga),
+    takeLatest(SORT_FIELD, setFilterSaga),
     takeLatest(PAGE_NEXT, changePageSaga),
     takeLatest(PAGE_PREVIOUS, changePageSaga),
   ]);

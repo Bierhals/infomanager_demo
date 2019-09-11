@@ -8,6 +8,7 @@ import {
   SET_FILTER,
   PAGE_NEXT,
   PAGE_PREVIOUS,
+  SORT_FIELD,
   FetchCustomersAction,
   FetchCustomersSuccessAction,
   FetchCustomersFailedAction,
@@ -15,6 +16,7 @@ import {
   SetFilterAction,
   PageNextAction,
   PagePreviousAction,
+  SortFieldAction,
   CustomerStatus,
 } from './types';
 
@@ -24,11 +26,15 @@ const initialState: CustomersState = {
     totalCount: 0,
     offset: 0,
     limit: 15,
-    loading: false,
-    error: null,
     filter: {
       status: CustomerStatus.All
     },
+    sort: {
+      field: 'address',
+      direction: 'asc'
+    },
+    error: null,
+    loading: false,
     showFilter: false,
   },
 };
@@ -119,6 +125,20 @@ function pagePrevious(state: CustomersState, action: PagePreviousAction) {
     };
 }
 
+function sortField(state: CustomersState, action: SortFieldAction) {
+  return {
+    ...state,
+    customerlist: {
+      ...state.customerlist,
+      sort: {
+        field: action.field,
+        direction: state.customerlist.sort.field !== action.field ? 'asc' : state.customerlist.sort.direction === 'asc' ? 'desc' : 'asc'
+      },
+      offset: 0,
+    },
+  };
+}
+
 export function reducer(state = initialState, action: CustomersActionTypes) {
   switch (action.type) {
     case FETCH_CUSTOMERS: return fetchCustomers(state, action);
@@ -128,6 +148,7 @@ export function reducer(state = initialState, action: CustomersActionTypes) {
     case SET_FILTER: return setFilter(state, action);
     case PAGE_NEXT: return pageNext(state, action);
     case PAGE_PREVIOUS: return pagePrevious(state, action);
+    case SORT_FIELD: return sortField(state, action);
     /* case actionTypes.FETCH_INGREDIENTS_FAILED: return fetchIngredientsFailed(state, action) */
     default: return state;
   }
