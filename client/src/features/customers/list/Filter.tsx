@@ -4,14 +4,14 @@ import { Filter } from '../../../store/customers/types'
 
 type Props = {
   filter: Filter,
-  setFilter: (filter: Filter) => void
+  onFilterChange: (filter: Filter) => void
 };
 
 const CustomersListFilterComponent: FunctionComponent<Props> = props => {
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     event.preventDefault();
 
-    props.setFilter({
+    props.onFilterChange({
       ...props.filter,
       [event.target.name]: event.target.value
     });

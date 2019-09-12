@@ -33,7 +33,7 @@ type Props = {
     readonly loading: boolean,
     readonly sort: Sort
   },
-  sortField: (field: string) => void,
+  onSortChange: (field: string) => void,
 };
 
 const CustomersListComponent: FunctionComponent<Props> = props => {
@@ -106,7 +106,7 @@ const CustomersListComponent: FunctionComponent<Props> = props => {
   const handleHeaderClick = (event: React.MouseEvent<HTMLTableCellElement>) => {
     event.preventDefault();
 
-    props.sortField(event.currentTarget.title);
+    props.onSortChange(event.currentTarget.title);
   }
 
   const ColumnHeader = (name: string, field: string) => {

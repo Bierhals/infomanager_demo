@@ -34,30 +34,31 @@ type Props = {
     readonly totalCount: number,
     readonly offset: number,
     readonly sort: Sort,
-    readonly limit: number,  },
-  fetchCustomers: () => void,
-  toggleFilter: () => void,
-  setFilter: (filter: Filter) => void,
-  pagePrevious: () => void,
-  pageNext: () => void,
-  sortField: (field: string) => void,
+    readonly limit: number,
+  },
+  onFetchCustomers: () => void,
+  onFilterToggle: () => void,
+  onFilterChange: (filter: Filter) => void,
+  onPagePrevious: () => void,
+  onPageNext: () => void,
+  onSortChange: (field: string) => void,
 };
 
 class CustomersListContainer extends Component<Props> {
   componentDidMount() {
-    this.props.fetchCustomers();
+    this.props.onFetchCustomers();
   }
 
   render() {
     let filterElement;
     if (this.props.customerlist.showFilter)
-      filterElement = (<CustomersListFilter filter={this.props.customerlist.filter} setFilter={this.props.setFilter} />);
+      filterElement = (<CustomersListFilter filter={this.props.customerlist.filter} onFilterChange={this.props.onFilterChange} />);
 
     return (
-      <DefaultLayout pageHeader={<PageHeader name="Kunden" filter={this.props.customerlist.filter} toggleFilter={this.props.toggleFilter} setFilter={this.props.setFilter} pageNext={this.props.pageNext} pagePrevious={this.props.pagePrevious} totalCount={this.props.customerlist.totalCount} limit={this.props.customerlist.limit} offset={this.props.customerlist.offset} />}>
+      <DefaultLayout pageHeader={<PageHeader name="Kunden" filter={this.props.customerlist.filter} onFilterToggle={this.props.onFilterToggle} onFilterChange={this.props.onFilterChange} onPageNext={this.props.onPageNext} onPagePrevious={this.props.onPagePrevious} totalCount={this.props.customerlist.totalCount} limit={this.props.customerlist.limit} offset={this.props.customerlist.offset} />}>
         { filterElement }
         <div id="content" className="flex-grow-1">
-          <CustomerListComponent customerlist={this.props.customerlist} sortField={this.props.sortField} />
+          <CustomerListComponent customerlist={this.props.customerlist} onSortChange={this.props.onSortChange} />
         </div>
       </DefaultLayout>
     )
@@ -72,12 +73,12 @@ function mapStateToProps(state: RootState) {
 
 function mapDispatchToProps(dispatch: Dispatch<CustomersActionTypes>) {
   return {
-    fetchCustomers: () => dispatch(fetchCustomers()),
-    toggleFilter: () => dispatch(toggleFilter()),
-    setFilter: (filter: Filter) => dispatch(setFilter(filter)),
-    pagePrevious: () => dispatch(pagePrevious()),
-    pageNext: () => dispatch(pageNext()),
-    sortField: (field: string) => dispatch(sortField(field)),
+    onFetchCustomers: () => dispatch(fetchCustomers()),
+    onFilterToggle: () => dispatch(toggleFilter()),
+    onFilterChange: (filter: Filter) => dispatch(setFilter(filter)),
+    onPagePrevious: () => dispatch(pagePrevious()),
+    onPageNext: () => dispatch(pageNext()),
+    onSortChange: (field: string) => dispatch(sortField(field)),
   };
 }
 
