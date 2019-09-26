@@ -4,7 +4,7 @@ import DefaultLayout from '../shared/layout/DefaultLayout';
 import PageHeader from '../shared/layout/DefaultListPageHeader';
 import {
   CustomerStatus,
-} from '../../store/customers/types';
+} from '../../store/customerslist/types';
 
 const styles = {
   th_pointer: {

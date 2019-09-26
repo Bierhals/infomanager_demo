@@ -6,8 +6,8 @@ import {
 import { composeWithDevTools } from 'redux-devtools-extension';
 import createSagaMiddleware from 'redux-saga';
 
-import customersReducers from './customers/reducers';
-import customersSagas  from './customers/sagas';
+import customerslistReducers from './customerslist/reducers';
+import customersSagas  from './customerslist/sagas';
 
 
 const sagaMiddleware = createSagaMiddleware();
@@ -20,7 +20,7 @@ export const configureStore = (initialState = {}) => {
 
 
   const rootReducer = combineReducers({
-    customers: customersReducers,
+    customerslist: customerslistReducers,
   });
 
   const store = createStore(

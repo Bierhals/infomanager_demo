@@ -65,17 +65,16 @@ export interface Filter {
 }
 
 export interface CustomersState {
-  readonly customerlist: {
-    readonly items: Customer[],
-    readonly totalCount: number,
-    readonly offset: number,
-    readonly limit: number,
-    readonly filter: Filter,
-    readonly sort: Sort,
-    readonly error: Error | string | null,
-    readonly loading: boolean,
-    readonly showFilter: boolean,
-  }
+  readonly items: Customer[],
+  readonly totalCount: number,
+  readonly offset: number,
+  readonly limit: number,
+  readonly filter: Filter,
+  readonly sort: Sort,
+  readonly error: Error | string | null,
+  readonly loading: boolean,
+  readonly showFilter: boolean,
+
 };
 
 export interface FetchCustomersAction {
@@ -84,7 +83,7 @@ export interface FetchCustomersAction {
 
 export interface FetchCustomersSuccessAction {
   type: typeof FETCH_CUSTOMERS_SUCCESS,
-  data:  DefaultListMetadata<Customer[]>
+  data: DefaultListMetadata<Customer[]>
 }
 
 export interface FetchCustomersFailedAction {

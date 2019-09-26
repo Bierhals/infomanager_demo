@@ -21,7 +21,7 @@ import {
 } from './types';
 import { Sort } from '../shared/types';
 import { customerRequestParams } from './selectors';
-import { fetchCustomers as ApifetchtCustomers } from './mock';
+import { fetchCustomers as ApifetchtCustomers } from '../../services/mockCustomers';
 
 export function* fetchCustomersSaga() {
   try {

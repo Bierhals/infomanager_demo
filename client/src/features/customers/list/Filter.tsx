@@ -1,6 +1,6 @@
 import React, { FunctionComponent, ChangeEvent } from 'react';
 
-import { Filter } from '../../../store/customers/types'
+import { Filter } from '../../../store/customerslist/types'
 
 type Props = {
   filter: Filter,

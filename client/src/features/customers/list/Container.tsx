@@ -9,9 +9,9 @@ import CustomerListComponent from './List';
 
 import {
   CustomersActionTypes,
-  Customer,
   Filter,
-} from '../../../store/customers/types';
+  CustomersState,
+} from '../../../store/customerslist/types';
 import {
   fetchCustomers,
   toggleFilter,
@@ -19,23 +19,11 @@ import {
   pagePrevious,
   pageNext,
   sortField
-} from '../../../store/customers/actions'
-import {
-  Sort
-} from '../../../store/shared/types';
+} from '../../../store/customerslist/actions'
 import { RootState } from '../../../store/types';
 
 type Props = {
-  customerlist: {
-    readonly items: Customer[],
-    readonly loading: boolean,
-    readonly showFilter: boolean,
-    readonly filter: Filter
-    readonly totalCount: number,
-    readonly offset: number,
-    readonly sort: Sort,
-    readonly limit: number,
-  },
+  customerslist: CustomersState,
   onFetchCustomers: () => void,
   onFilterToggle: () => void,
   onFilterChange: (filter: Filter) => void,
@@ -51,14 +39,14 @@ class CustomersListContainer extends Component<Props> {
 
   render() {
     let filterElement;
-    if (this.props.customerlist.showFilter)
-      filterElement = (<CustomersListFilter filter={this.props.customerlist.filter} onFilterChange={this.props.onFilterChange} />);
+    if (this.props.customerslist.showFilter)
+      filterElement = (<CustomersListFilter filter={this.props.customerslist.filter} onFilterChange={this.props.onFilterChange} />);
 
     return (
-      <DefaultLayout pageHeader={<PageHeader name="Kunden" filter={this.props.customerlist.filter} onFilterToggle={this.props.onFilterToggle} onFilterChange={this.props.onFilterChange} onPageNext={this.props.onPageNext} onPagePrevious={this.props.onPagePrevious} totalCount={this.props.customerlist.totalCount} limit={this.props.customerlist.limit} offset={this.props.customerlist.offset} />}>
+      <DefaultLayout pageHeader={<PageHeader name="Kunden" filter={this.props.customerslist.filter} onFilterToggle={this.props.onFilterToggle} onFilterChange={this.props.onFilterChange} onPageNext={this.props.onPageNext} onPagePrevious={this.props.onPagePrevious} totalCount={this.props.customerslist.totalCount} limit={this.props.customerslist.limit} offset={this.props.customerslist.offset} />}>
         { filterElement }
         <div id="content" className="flex-grow-1">
-          <CustomerListComponent customerlist={this.props.customerlist} onSortChange={this.props.onSortChange} />
+          <CustomerListComponent customerlist={this.props.customerslist} onSortChange={this.props.onSortChange} />
         </div>
       </DefaultLayout>
     )
@@ -67,7 +55,7 @@ class CustomersListContainer extends Component<Props> {
 
 function mapStateToProps(state: RootState) {
   return {
-    customerlist: state.customers.customerlist
+    customerslist: state.customerslist
   };
 }
 

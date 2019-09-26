@@ -13,7 +13,7 @@ import {
   DropdownButton
 } from 'react-bootstrap'
 
-import { Filter, CustomerStatus } from '../../../store/customers/types'
+import { Filter, CustomerStatus } from '../../../store/customerslist/types'
 
 
 type Props = {

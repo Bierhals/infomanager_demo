@@ -24,121 +24,95 @@ import {
 } from '../shared/types';
 
 const initialState: CustomersState = {
-  customerlist: {
-    items: [],
-    totalCount: 0,
-    offset: 0,
-    limit: 15,
-    filter: {
-      status: CustomerStatus.All
-    },
-    sort: {
-      field: 'name',
-      direction: SortDirection.asc,
-    },
-    error: null,
-    loading: false,
-    showFilter: false,
+  items: [],
+  totalCount: 0,
+  offset: 0,
+  limit: 15,
+  filter: {
+    status: CustomerStatus.All
   },
+  sort: {
+    field: 'name',
+    direction: SortDirection.asc,
+  },
+  error: null,
+  loading: false,
+  showFilter: false,
 };
 
 function fetchCustomers(state: CustomersState, action: FetchCustomersAction) {
   return {
     ...state,
-    customerlist: {
-      ...state.customerlist,
       data: [],
       error: null,
       loading: true,
-    },
   };
 }
 
 function fetchCustomersSuccess(state: CustomersState, action: FetchCustomersSuccessAction) {
   return {
     ...state,
-    customerlist: {
-      ...state.customerlist,
       ...action.data,
       error: null,
       loading: false,
-    },
   };
 }
 
 function fetchCustomersFailed(state: CustomersState, action: FetchCustomersFailedAction) {
   return {
     ...state,
-    customerlist: {
-      ...state.customerlist,
       error: action.error,
       loading: false,
-    },
   };
 }
 
 function toggleFilter(state: CustomersState, action: ToggleFilterAction) {
   return {
     ...state,
-    customerlist: {
-      ...state.customerlist,
-      showFilter: state.customerlist.showFilter === false,
-    },
+      showFilter: state.showFilter === false,
   };
 }
 
 function setFilter(state: CustomersState, action: SetFilterAction) {
   return {
     ...state,
-    customerlist: {
-      ...state.customerlist,
       filter: action.filter,
       offset: 0,
-    },
   };
 }
 
 function pageNext(state: CustomersState, action: PageNextAction) {
-  const newOffset = state.customerlist.offset + state.customerlist.limit;
+  const newOffset = state.offset + state.limit;
 
-  if (newOffset+1 > state.customerlist.totalCount)
+  if (newOffset + 1 > state.totalCount)
     return state;
   else
     return {
       ...state,
-      customerlist: {
-        ...state.customerlist,
         offset: newOffset,
-      },
     };
 }
 
 function pagePrevious(state: CustomersState, action: PagePreviousAction) {
-  const newOffset = state.customerlist.offset - state.customerlist.limit;
+  const newOffset = state.offset - state.limit;
 
   if (newOffset < 0)
     return state;
   else
     return {
       ...state,
-      customerlist: {
-        ...state.customerlist,
         offset: newOffset,
-      },
     };
 }
 
 function sortField(state: CustomersState, action: SortFieldAction) {
   return {
     ...state,
-    customerlist: {
-      ...state.customerlist,
       sort: {
         field: action.field,
-        direction: state.customerlist.sort.field !== action.field ? SortDirection.asc : state.customerlist.sort.direction === SortDirection.asc ? SortDirection.desc : SortDirection.asc
+        direction: state.sort.field !== action.field ? SortDirection.asc : state.sort.direction === SortDirection.asc ? SortDirection.desc : SortDirection.asc
       },
       offset: 0,
-    },
   };
 }
 

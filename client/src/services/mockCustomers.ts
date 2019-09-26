@@ -4,12 +4,12 @@ import {
   CustomerPerson,
   CustomerStatus,
   Filter
-} from './types';
+} from '../store/customerslist/types';
 import {
   DefaultListMetadata,
   Sort,
   SortDirection,
-} from '../shared/types';
+} from '../store/shared/types';
 
 let customers: (CustomerPerson | CustomerShop)[] = [
   {

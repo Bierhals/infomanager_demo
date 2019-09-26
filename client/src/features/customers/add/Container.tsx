@@ -5,7 +5,7 @@ import PageHeader from '../../shared/layout/DefaultListPageHeader';
 
 import {
   CustomerStatus,
-} from '../../../store/customers/types';
+} from '../../../store/customerslist/types';
 
 type Props = {
 };

@@ -1,19 +1,24 @@
 import React, { Component } from 'react';
+import { RouteComponentProps } from 'react-router-dom';
 
 import DefaultLayout from '../../shared/layout/DefaultLayout';
 import PageHeader from '../../shared/layout/DefaultListPageHeader';
 
 import {
   CustomerStatus,
-} from '../../../store/customers/types';
+} from '../../../store/customerslist/types';
 
-type Props = {
-};
+interface MatchParams {
+  customerId: string;
+}
+
+interface Props extends RouteComponentProps<MatchParams> {
+}
 
 class CustomersEditContainer extends Component<Props> {
   render() {
     return (
-      <DefaultLayout pageHeader={<PageHeader name={`Kunden/`} filter={{ status: CustomerStatus.All }} onFilterToggle={() => { }} onFilterChange={() => { }} onPageNext={() => { }} onPagePrevious={() => { }} totalCount={0} limit={15} offset={0} />}>
+      <DefaultLayout pageHeader={<PageHeader name={`Kunden/${this.props.match.params.customerId}`} filter={{ status: CustomerStatus.All }} onFilterToggle={() => { }} onFilterChange={() => { }} onPageNext={() => { }} onPagePrevious={() => { }} totalCount={0} limit={15} offset={0} />}>
         <div id="content">
           <div className="card">
             <div className="card-header">

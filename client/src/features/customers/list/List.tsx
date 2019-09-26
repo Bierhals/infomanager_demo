@@ -14,7 +14,7 @@ import {
   CustomerPerson,
   CustomerShop,
   Filter,
-} from '../../../store/customers/types';
+} from '../../../store/customerslist/types';
 import {
   Sort
 } from '../../../store/shared/types';
