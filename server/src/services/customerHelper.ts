@@ -34,9 +34,9 @@ export const customerStatuses = [
   },
 ];
 
-export function convertCustomer(cust, prefix: string) {
+export function convertCustomer(cust: any, prefix?: string) {
   const usedPrefix = prefix || '';
-  const converted = {
+  const converted: any = {
     id: cust[`${usedPrefix}id`],
     dateCreated: cust[`${usedPrefix}dateCreated`],
     userCreated: cust[`${usedPrefix}userCreated`],
@@ -51,15 +51,15 @@ export function convertCustomer(cust, prefix: string) {
       country: cust[`${usedPrefix}country`],
       email: cust[`${usedPrefix}email`],
     },
-    status: customerStatuses.find(x => x.id === cust[`${usedPrefix}statusID`]).name,
+    status: customerStatuses.find((x) => x.id === cust[`${usedPrefix}statusID`])?.name,
   };
 
   return converted;
 }
 
-export function convertCustomerAsset(customerAsset, prefix) {
+export function convertCustomerAsset(customerAsset: any, prefix?: string) {
   const usedPrefix = prefix || '';
-  const converted = {
+  const converted: any = {
     id: customerAsset[`${usedPrefix}id`],
     dateCreated: customerAsset[`${usedPrefix}dateCreated`],
     userCreated: customerAsset[`${usedPrefix}userCreated`],

@@ -7,13 +7,22 @@ import {
   convertCustomer,
   convertCustomerAsset,
 } from './customerHelper';
-const { convertAsset, assetFields } = require('./assetHelper');
 import { addQuerySortAndLimits } from './repositoryHelper';
 
-export async function getCustomerAssets(limit, offset, sort, customer, asset, onlyValid, embed) {
+const { convertAsset, assetFields } = require('./assetHelper');
+
+export async function getCustomerAssets(
+  limit: number | null,
+  offset: number | null,
+  sort: string,
+  customer: any,
+  asset: any,
+  onlyValid: boolean,
+  embed: string,
+) {
   const query = dbContext.from('im_customer_asset');
-  let selectFields = customerAssetFields.map(f => ({ objectName: `${f.objectName}`, fieldName: `ca_${f.fieldName}`, fieldWithTable: `im_customer_asset.${f.fieldName}` }));
-  let embedArray = [];
+  let selectFields = customerAssetFields.map((f) => ({ objectName: `${f.objectName}`, fieldName: `ca_${f.fieldName}`, fieldWithTable: `im_customer_asset.${f.fieldName}` }));
+  let embedArray: any = [];
 
   if (customer) {
     if (Number.isInteger(customer)) {
@@ -43,15 +52,15 @@ export async function getCustomerAssets(limit, offset, sort, customer, asset, on
 
   if (embed) {
     embedArray = embed.split(',');
-    embedArray.forEach((item) => {
+    embedArray.forEach((item: any) => {
       switch (item) {
         case 'customer':
           query.innerJoin('im_customer', 'im_customer_asset.customerID', 'im_customer.id');
-          selectFields = selectFields.concat(customerFields.map(f => ({ objectName: `customer.${f.objectName}`, fieldName: `c_${f.fieldName}`, fieldWithTable: `im_customer.${f.fieldName}` })));
+          selectFields = selectFields.concat(customerFields.map((f) => ({ objectName: `customer.${f.objectName}`, fieldName: `c_${f.fieldName}`, fieldWithTable: `im_customer.${f.fieldName}` })));
           break;
         case 'asset':
           query.innerJoin('im_asset', 'im_customer_asset.assetID', 'im_asset.id');
-          selectFields = selectFields.concat(assetFields.map(f => ({ objectName: `asset.${f.objectName}`, fieldName: `a_${f.fieldName}`, fieldWithTable: `im_asset.${f.fieldName}` })));
+          selectFields = selectFields.concat(assetFields.map((f: any) => ({ objectName: `asset.${f.objectName}`, fieldName: `a_${f.fieldName}`, fieldWithTable: `im_asset.${f.fieldName}` })));
           break;
         default:
           throw new Error(`Unknown embed ${item}`);
@@ -61,7 +70,7 @@ export async function getCustomerAssets(limit, offset, sort, customer, asset, on
 
   addQuerySortAndLimits(query, limit, offset, sort, selectFields);
 
-  let data = await query.select(selectFields.map(f => (f.fieldWithTable ? `${f.fieldWithTable} as ${f.fieldName}` : f.fieldName)));
+  let data = await query.select(selectFields.map((f) => (f.fieldWithTable ? `${f.fieldWithTable} as ${f.fieldName}` : f.fieldName)));
   data = data.map((row) => {
     const customerAsset = convertCustomerAsset(row, 'ca_');
     if (embed) {
@@ -79,7 +88,13 @@ export async function getCustomerAssets(limit, offset, sort, customer, asset, on
   return { totalCount: totalCount[0]['count(*)'], items: data };
 }
 
-export async function getCustomers(limit: number, offset: number, sort: string, search: string, embed: string) {
+export async function getCustomers(
+  limit: number,
+  offset: number,
+  sort: string,
+  search: string,
+  embed: string,
+) {
   const query = dbContext.from('im_customer');
   const selectFields = customerFields;
   let embedArray = [];
@@ -93,7 +108,7 @@ export async function getCustomers(limit: number, offset: number, sort: string, 
       .orWhere('state', 'like', `%${search}%`)
       .orWhere('email', 'like', `%${search}%`);
 
-    const status = customerStatuses.find(x => x.name === search);
+    const status = customerStatuses.find((x) => x.name === search);
     if (status) {
       query.orWhere('statusID', status.id);
     }
@@ -102,8 +117,8 @@ export async function getCustomers(limit: number, offset: number, sort: string, 
   const totalCount = await query.clone().count();
   addQuerySortAndLimits(query, limit, offset, sort, selectFields);
 
-  let data = await query.select<Customer[]>();
-  data = data.map(row => convertCustomer(row));
+  const dbData = await query.select<Customer[]>();
+  const data = dbData.map((row) => convertCustomer(row));
 
   if (embed) {
     embedArray = embed.split(',');
@@ -115,7 +130,7 @@ export async function getCustomers(limit: number, offset: number, sort: string, 
           data.forEach((customer) => {
             // eslint-disable-next-line no-param-reassign
             customer._embedded = {
-              assignedAssets: dataAssets.items.filter(asset => asset.customerID === customer.id),
+              assignedAssets: dataAssets.items.filter((asset) => asset.customerID === customer.id),
             };
           });
           break;
@@ -128,7 +143,7 @@ export async function getCustomers(limit: number, offset: number, sort: string, 
   return { totalCount: totalCount[0]['count(*)'], items: data };
 }
 
-async function getCustomer(id) {
+async function getCustomer(id: number) {
   const query = dbContext.select().from('im_customer').where('id', id);
   const data = await query;
 
@@ -139,11 +154,11 @@ async function getCustomer(id) {
   return convertCustomer(data[0]);
 }
 
-async function getCustomerAsset(id, embed) {
+async function getCustomerAsset(id: number, embed?: string) {
   const query = dbContext.from('im_customer_asset')
     .where('im_customer_asset.id', id);
-  let selectFields = customerAssetFields.map(f => ({ objectName: `${f.objectName}`, fieldName: `ca_${f.fieldName}`, fieldWithTable: `im_customer_asset.${f.fieldName}` }));
-  let embedArray = [];
+  let selectFields = customerAssetFields.map((f) => ({ objectName: `${f.objectName}`, fieldName: `ca_${f.fieldName}`, fieldWithTable: `im_customer_asset.${f.fieldName}` }));
+  let embedArray: string[] = [];
 
   if (embed) {
     embedArray = embed.split(',');
@@ -151,11 +166,11 @@ async function getCustomerAsset(id, embed) {
       switch (item) {
         case 'customer':
           query.innerJoin('im_customer', 'im_customer_asset.customerID', 'im_customer.id');
-          selectFields = selectFields.concat(customerFields.map(f => ({ objectName: `customer.${f.objectName}`, fieldName: `c_${f.fieldName}`, fieldWithTable: `im_customer.${f.fieldName}` })));
+          selectFields = selectFields.concat(customerFields.map((f) => ({ objectName: `customer.${f.objectName}`, fieldName: `c_${f.fieldName}`, fieldWithTable: `im_customer.${f.fieldName}` })));
           break;
         case 'asset':
           query.innerJoin('im_asset', 'im_customer_asset.assetID', 'im_asset.id');
-          selectFields = selectFields.concat(assetFields.map(f => ({ objectName: `asset.${f.objectName}`, fieldName: `a_${f.fieldName}`, fieldWithTable: `im_asset.${f.fieldName}` })));
+          selectFields = selectFields.concat(assetFields.map((f: any) => ({ objectName: `asset.${f.objectName}`, fieldName: `a_${f.fieldName}`, fieldWithTable: `im_asset.${f.fieldName}` })));
           break;
         default:
           throw new Error(`Unknown embed ${item}`);
@@ -163,7 +178,7 @@ async function getCustomerAsset(id, embed) {
     });
   }
 
-  const data = await query.select(selectFields.map(f => (f.fieldWithTable ? `${f.fieldWithTable} as ${f.fieldName}` : f.fieldName)));
+  const data = await query.select(selectFields.map((f) => (f.fieldWithTable ? `${f.fieldWithTable} as ${f.fieldName}` : f.fieldName)));
 
   if (data.length !== 1) {
     return null;
@@ -183,7 +198,7 @@ async function getCustomerAsset(id, embed) {
   return customerAsset;
 }
 
-async function updateCustomer(id, cust) {
+async function updateCustomer(id: number, cust: any) {
   await dbContext.transaction(async (trx) => {
     const rowCount = await trx.update({
       dateChanged: new Date().toISOString(),
@@ -195,14 +210,14 @@ async function updateCustomer(id, cust) {
       state: cust.address.state || null,
       country: cust.address.country || null,
       email: cust.address.email || null,
-      statusID: customerStatuses.find(x => x.name === cust.status).id,
+      statusID: customerStatuses.find((x) => x.name === cust.status)?.id,
     })
       .into('im_customer')
       .where('id', id);
 
     if (rowCount !== 1) {
       const error = new Error('Es wurden mehr oder weniger als eine Zeile aktualisiert');
-      error.code = 'UPDATE_NOT_UNIQUE';
+      // error.code = 'UPDATE_NOT_UNIQUE';
       throw error;
     }
   });
@@ -212,7 +227,7 @@ async function updateCustomer(id, cust) {
   return updatedCustomer;
 }
 
-async function updateCustomerAsset(id, custAsset) {
+async function updateCustomerAsset(id: number, custAsset: any) {
   await dbContext.transaction(async (trx) => {
     const rowCount = await trx.update({
       dateChanged: new Date().toISOString(),
@@ -227,7 +242,7 @@ async function updateCustomerAsset(id, custAsset) {
 
     if (rowCount !== 1) {
       const error = new Error('Es wurden mehr oder weniger als eine Zeile aktualisiert');
-      error.code = 'UPDATE_NOT_UNIQUE';
+      // error.code = 'UPDATE_NOT_UNIQUE';
       throw error;
     }
   });
@@ -237,7 +252,7 @@ async function updateCustomerAsset(id, custAsset) {
   return updatedCustomerAsset;
 }
 
-async function createCustomer(cust) {
+async function createCustomer(cust: any) {
   const newCustomer = cust;
   newCustomer.dateCreated = new Date().toISOString();
   newCustomer.userCreated = 1;
@@ -256,7 +271,7 @@ async function createCustomer(cust) {
       state: newCustomer.address.state || null,
       country: newCustomer.address.country || null,
       email: newCustomer.address.email || null,
-      statusID: customerStatuses.find(x => x.name === cust.status).id,
+      statusID: customerStatuses.find((x) => x.name === cust.status)?.id,
     });
   const newId = await query;
 
@@ -265,7 +280,7 @@ async function createCustomer(cust) {
   return newCustomer;
 }
 
-async function createCustomerAsset(custAsset) {
+async function createCustomerAsset(custAsset: any) {
   let newCustomerAsset = custAsset;
   newCustomerAsset.dateCreated = new Date().toISOString();
   newCustomerAsset.userCreated = 1;
@@ -284,7 +299,7 @@ async function createCustomerAsset(custAsset) {
     });
   const newId = await query;
 
-  newCustomerAsset = await getCustomerAsset(newId.id);
+  newCustomerAsset = await getCustomerAsset(newId[0]);
 
   return newCustomerAsset;
 }

@@ -1,5 +1,5 @@
 const httpErrors = require('http-errors');
-const customersRepository = require('../../dao/customersRepository');
+const customersRepository = require('../../services/customersRepository');
 
 // Get all customers
 async function getCustomers(req) {

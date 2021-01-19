@@ -78,7 +78,6 @@ async function getAssetCustomers(req) {
   }
 }
 
-
 // Add a new asset
 async function createAsset(req) {
   try {

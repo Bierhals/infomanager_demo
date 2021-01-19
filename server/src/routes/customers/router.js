@@ -12,7 +12,6 @@ const {
 } = require('../customerAssets/schemaModel');
 const { assetSchema } = require('../assets/schemaModel');
 
-
 const getCustomersRoute = {
   method: 'GET',
   url: '/customers',
@@ -206,7 +205,6 @@ const updateCustomerRoute = {
   },
   handler: customersController.updateCustomer,
 };
-
 
 const createCustomerRoute = {
   method: 'POST',

@@ -11,11 +11,12 @@ import { DBUnknownFieldMapping } from '../core/errors';
  * @param {string} fieldMappings[].objectName - Object-Feldname
  * @param {string} fieldMappings[].fieldName - SQL-Feldname
  */
+// eslint-disable-next-line import/prefer-default-export
 export function addQuerySortAndLimits(
   knexQuery: QueryBuilder<any, any>,
-  limit?: number,
-  offset?: number,
-  sort?: string,
+  limit?: number | null,
+  offset?: number | null,
+  sort?: string | null,
   fieldMappings?: Array<{ objectName: string, fieldName: string }>,
 ) {
   if (limit) {
@@ -28,7 +29,7 @@ export function addQuerySortAndLimits(
     knexQuery.orderBy(
       sort.split(',')
         .map((field) => {
-          const orderField: { column: string; order?: "asc" | "desc" | undefined } = { column: field };
+          const orderField: { column: string; order?: 'asc' | 'desc' | undefined } = { column: field };
 
           switch (field.charAt(0)) {
             case '-':
@@ -43,7 +44,7 @@ export function addQuerySortAndLimits(
           }
 
           if (fieldMappings) {
-            const fieldMapping = fieldMappings.find(f => f.objectName === orderField.column);
+            const fieldMapping = fieldMappings.find((f) => f.objectName === orderField.column);
 
             // Prüfen, ob der Feldname bekannt wird
             if (fieldMapping) {

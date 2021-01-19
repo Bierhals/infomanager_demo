@@ -212,7 +212,6 @@ const createAssetRoute = {
   handler: assetsController.createAsset,
 };
 
-
 function allRoutes() {
   return [
     getAssetsRoute,

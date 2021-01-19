@@ -37,7 +37,7 @@ export function* changePageSaga() {
 }
 
 export function* setFilterSaga() {
-  yield call(() => new Promise(resolve => {
+  yield call(() => new Promise<void>(resolve => {
     setTimeout(_ => {
       resolve()
     }, 500)

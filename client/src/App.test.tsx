@@ -1,9 +1,16 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import App from './App';
+import { render, screen } from '@testing-library/react';
+import { Provider } from 'react-redux';
 
-it('renders without crashing', () => {
-  const div = document.createElement('div');
-  ReactDOM.render(<App />, div);
-  ReactDOM.unmountComponentAtNode(div);
+import App from './App';
+import { configureStore } from './store/configureStore';
+
+test('renders without crashing', () => {
+  render(
+    <Provider store={configureStore()}>
+      <App />
+    </Provider>
+  );
+  const linkElement = screen.getByText(/Infomanager/i);
+  expect(linkElement).toBeInTheDocument();
 });

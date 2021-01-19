@@ -1,10 +1,12 @@
-import * as fastify from 'fastify';
+import fastify, { RouteOptions } from 'fastify';
 import * as openAPI from 'fastify-oas';
+
 import { AddressInfo } from 'net';
-const customersRouter = require('./api/customers/router');
-const assetsRouter = require('./api/assets/router');
-const customerAssetsRouter = require('./api/customerAssets/router');
-const homeRouter = require('./api/home/router');
+
+const customersRouter = require('./routes/customers/router');
+const assetsRouter = require('./routes/assets/router');
+const customerAssetsRouter = require('./routes/customerAssets/router');
+const homeRouter = require('./routes/home/router');
 
 const api = fastify({
   logger: true,
@@ -34,16 +36,16 @@ api.register(openAPI, {
 });
 
 // add Routes
-homeRouter.allRoutes().forEach((route) => {
+homeRouter.allRoutes().forEach((route: RouteOptions) => {
   api.route(route);
 });
-customersRouter.allRoutes().forEach((route) => {
+customersRouter.allRoutes().forEach((route: RouteOptions) => {
   api.route(route);
 });
-assetsRouter.allRoutes().forEach((route) => {
+assetsRouter.allRoutes().forEach((route: RouteOptions) => {
   api.route(route);
 });
-customerAssetsRouter.allRoutes().forEach((route) => {
+customerAssetsRouter.allRoutes().forEach((route: RouteOptions) => {
   api.route(route);
 });
 

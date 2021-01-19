@@ -44,7 +44,7 @@ const assetTypes = [
   },
 ];
 
-function convertAsset(asset, prefix) {
+function convertAsset(asset: any, prefix: any) {
   const usedPrefix = prefix || '';
   const converted = {
     id: asset[`${usedPrefix}id`],
@@ -53,9 +53,9 @@ function convertAsset(asset, prefix) {
     dateChanged: asset[`${usedPrefix}dateChanged`],
     userChanged: asset[`${usedPrefix}userChanged`],
     name: asset[`${usedPrefix}name`],
-    type: assetTypes.find(x => x.id === asset[`${usedPrefix}typeID`]).name,
+    type: assetTypes.find((x) => x.id === asset[`${usedPrefix}typeID`])?.name,
     serial: asset[`${usedPrefix}serial`],
-    status: assetStatuses.find(x => x.id === asset[`${usedPrefix}statusID`]).name,
+    status: assetStatuses.find((x) => x.id === asset[`${usedPrefix}statusID`])?.name,
   };
 
   return converted;

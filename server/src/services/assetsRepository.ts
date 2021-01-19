@@ -12,18 +12,18 @@ const {
 } = require('./customerHelper');
 const { addQuerySortAndLimits } = require('./repositoryHelper');
 
-export async function getAssets(limit, offset, sort) {
+export async function getAssets(limit: number, offset: number, sort: string) {
   const query = dbContext.from('im_asset');
   const totalCount = await query.clone().count();
   addQuerySortAndLimits(query, limit, offset, sort, assetFields, [{ search: 'status', text: 'statusID' }, { search: 'type', text: 'typeID' }]);
 
   let data = await query.select();
-  data = data.map(row => convertAsset(row));
+  data = data.map((row: any) => convertAsset(row));
 
   return { totalCount: totalCount[0]['count(*)'], items: data };
 }
 
-export async function getAsset(id) {
+export async function getAsset(id: number) {
   const query = dbContext.select().from('im_asset').where('id', id);
   const data = await query;
 
@@ -34,7 +34,13 @@ export async function getAsset(id) {
   return convertAsset(data[0]);
 }
 
-export async function getAssetCustomers(limit, offset, sort, assetID, onlyValid) {
+export async function getAssetCustomers(
+  limit: number,
+  offset: number,
+  sort: string,
+  assetID: number,
+  onlyValid: boolean,
+) {
   const query = dbContext.from('im_customer_asset')
     .innerJoin('im_customer', 'im_customer_asset.customerID', 'im_customer.id')
     .where('assetID', assetID);
@@ -63,7 +69,7 @@ export async function getAssetCustomers(limit, offset, sort, assetID, onlyValid)
     'im_customer.phone as c_phone',
     'im_customer.email as c_email',
   ]);
-  data = data.map((x) => {
+  data = data.map((x: any) => {
     const customerAsset = {
       ...convertCustomerAsset(x),
       _embedded: {
@@ -76,22 +82,22 @@ export async function getAssetCustomers(limit, offset, sort, assetID, onlyValid)
   return { totalCount: totalCount[0]['count(*)'], items: data };
 }
 
-export async function updateAsset(id, asset) {
-  await dbContext.transaction(async (trx) => {
+export async function updateAsset(id: number, asset: any) {
+  await dbContext.transaction(async (trx: any) => {
     const rowCount = await trx.update({
       dateChanged: new Date().toISOString(),
       userChanged: 1,
       name: asset.name,
       serial: asset.serial,
-      typeID: assetTypes.find(x => x.name === asset.type).id,
-      statusID: assetStatuses.find(x => x.name === asset.status).id,
+      typeID: assetTypes.find((x: any) => x.name === asset.type).id,
+      statusID: assetStatuses.find((x: any) => x.name === asset.status).id,
     })
       .into('im_asset')
       .where('id', id);
 
     if (rowCount !== 1) {
       const error = new Error('Es wurden mehr oder weniger als eine Zeile aktualisiert');
-      error.code = 'UPDATE_NOT_UNIQUE';
+      // error.code = 'UPDATE_NOT_UNIQUE';
       throw error;
     }
   });
@@ -101,7 +107,7 @@ export async function updateAsset(id, asset) {
   return updatedCustomer;
 }
 
-export async function createAsset(asset) {
+export async function createAsset(asset: any) {
   const newAsset = asset;
   newAsset.dateCreated = new Date().toISOString();
   newAsset.userCreated = 1;
@@ -115,8 +121,8 @@ export async function createAsset(asset) {
       userChanged: newAsset.userChanged,
       name: newAsset.name,
       serial: newAsset.serial,
-      typeID: assetTypes.find(x => x.name === newAsset.type).id,
-      statusID: assetStatuses.find(x => x.name === newAsset.status).id,
+      typeID: assetTypes.find((x: any) => x.name === newAsset.type).id,
+      statusID: assetStatuses.find((x: any) => x.name === newAsset.status).id,
     });
   const newId = await query;
 
